@@ -1,4 +1,11 @@
-﻿/* Small devices (landscape phones, 576px and up) */ 
+﻿
+.page-title {
+    padding: 5em 0;
+    background-color: darkgray;
+}
+
+
+/* Small devices (landscape phones, 576px and up) */ 
 @media (min-width: 576px) {
 }
 
