@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,8 @@ namespace SimpleBlog.Pages
 
         public string Title { get; set; }
         public string Body { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MMMM dd, yyyy}")]
         public DateTime Created { get; set; }
         public List<string> Tags { get; set; }
 
@@ -30,7 +33,6 @@ namespace SimpleBlog.Pages
                 Title = "404 Not Found";
                 Body = "Unfortunately this blog post was not found.";
                 Created = DateTime.Now;
-                Tags = new List<string>();
                 return;
             }
             Title = article.Title;
