@@ -1,4 +1,15 @@
-﻿/* Small devices (landscape phones, 576px and up) */ 
+﻿
+.page-title {
+    padding: 5em 0;
+    background-color: #A9A9A9;
+}
+
+.page-title-bottom {
+    background-color: #D3D3D3;
+}
+
+
+/* Small devices (landscape phones, 576px and up) */ 
 @media (min-width: 576px) {
 }
 

@@ -1,0 +1,11 @@
+﻿@page "/blog/tag/{tag}"
+@model SimpleBlog.Pages.BlogTagModel
+@{
+    ViewData["Title"] = "Blog";
+}
+
+<div class="page-title">
+    <div class="container">
+        <h1 class="display-4">Tag: @Model.Tag</h1>
+    </div>
+</div>
