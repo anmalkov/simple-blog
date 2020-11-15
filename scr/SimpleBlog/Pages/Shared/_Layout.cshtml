@@ -1,17 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Options
+@using SimpleBlog.Configuration
+
+@inject IOptions<BlogConfiguration> BlogConfigurationOptions
+@{ 
+    var config = BlogConfigurationOptions.Value;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Andrew Malkov - @ViewData["Title"]</title>
+    <title>@config.Title - @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/libs/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css"  />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/index">Andrew Malkov</a>
+                <a class="navbar-brand" asp-area="" asp-page="/index">@config.Title</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -27,7 +35,7 @@
                     </ul>
                 </div>
             </div>
-         </nav>
+        </nav>
     </header>
     <main role="main" class="container-fluid pb-3 px-0">
         @RenderBody()
@@ -35,7 +43,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; Copyright 2020, <a asp-area="" asp-page="/index">Andrew Malkov</a>. Powered by <a href="https://github.com/anmalkov/simple-blog">SimpleBlog v0.1</a> on <a href="https://dotnet.microsoft.com/download/dotnet/5.0">.NET @Environment.Version</a>
+            &copy; Copyright 2020, <a asp-area="" asp-page="/index">@config.Owner</a>. Powered by <a href="https://github.com/anmalkov/simple-blog">SimpleBlog v0.1</a> on <a href="https://dotnet.microsoft.com/download/dotnet/5.0">.NET @Environment.Version</a>
         </div>
     </footer>
 
