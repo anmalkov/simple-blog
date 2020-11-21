@@ -57,7 +57,7 @@ namespace SimpleBlog.Repositories
                 return;
             }
 
-            article.Released = true;
+            article.Published = true;
             await UpdateAsync(article);
         }
 

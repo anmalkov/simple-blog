@@ -26,6 +26,12 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-area="" asp-page="/admin">Admin</a>
+                            </li>
+                        }
                         <li class="nav-item active">
                             <a class="nav-link" asp-area="" asp-page="/about">About</a>
                         </li>
