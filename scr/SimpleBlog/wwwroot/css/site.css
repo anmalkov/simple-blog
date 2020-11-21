@@ -4,6 +4,17 @@
     background-color: #A9A9A9;
 }
 
+.page-title-small {
+    padding: 0.5em 0;
+    background-color: #A9A9A9;
+}
+
+.page-title-small h1 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
 .page-title-bottom {
     background-color: #D3D3D3;
 }
@@ -24,3 +35,4 @@
 /* Extra large devices (large desktops, 1200px and up) */ 
 @media (min-width: 1200px) {
 }
+
