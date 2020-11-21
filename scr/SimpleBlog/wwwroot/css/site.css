@@ -19,6 +19,10 @@
     background-color: #D3D3D3;
 }
 
+.page-body {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
 
 /* Small devices (landscape phones, 576px and up) */ 
 @media (min-width: 576px) {
