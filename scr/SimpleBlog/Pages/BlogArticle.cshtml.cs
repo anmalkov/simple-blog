@@ -28,7 +28,7 @@ namespace SimpleBlog.Pages
         public async Task OnGetAsync(string id)
         {
             var article = await _articlesService.GetAsync(id);
-            if (article == null)
+            if (article == null || (!article.Published && !User.Identity.IsAuthenticated))
             {
                 Title = "404 Not Found";
                 Body = "Unfortunately this blog post was not found.";

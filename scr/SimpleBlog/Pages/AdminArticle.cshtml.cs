@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +20,7 @@ namespace SimpleBlog.Pages
         [BindProperty]
         [Required]
         [Display(Name = "URL name")]
-        public string Id { get; set; }
+        public string ArticleId { get; set; }
 
         [BindProperty]
         [Required]
@@ -46,12 +47,20 @@ namespace SimpleBlog.Pages
             _articlesService = articlesService;
         }
 
-        public void OnGet()
+        public async Task OnGet(string id)
         {
-            Published = true;
+            if (string.IsNullOrEmpty(id))
+            {
+                Published = true;
+                return;
+            }
+
+            var article = await _articlesService.GetAsync(id);
+
+            MapFromArticle(article);
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(string id)
         {
             if (!ModelState.IsValid)
             {
@@ -59,7 +68,14 @@ namespace SimpleBlog.Pages
             }
 
             var article = MapToArticle();
-            await _articlesService.CreateAsync(article);
+
+            if (string.IsNullOrEmpty(id))
+            {
+                await _articlesService.CreateAsync(article);
+            } else
+            {
+                await _articlesService.UpdateAsync(article);
+            }
 
             return RedirectToPage("/admin");
         }
@@ -68,11 +84,20 @@ namespace SimpleBlog.Pages
         {
             return new Article
             {
-                Id = Id,
+                Id = ArticleId,
                 Title = Title,
                 Body = Body,
-                Tags = new List<string>(Tags.Split(','))
+                Tags = new List<string>(Tags.Split(',')),
+                Published = Published
             };
+        }
+        private void MapFromArticle(Article article)
+        {
+            ArticleId = article.Id;
+            Title = article.Title;
+            Body = article.Body;
+            Tags = string.Join(", ", article.Tags);
+            Published = article.Published;
         }
     }
 }

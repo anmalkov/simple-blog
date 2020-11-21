@@ -1,4 +1,4 @@
-﻿@page "/admin/article"
+﻿@page "/admin/article/{id?}"
 @model SimpleBlog.Pages.AdminArticleModel
 @{
     Layout = "_AdminLayout";
@@ -13,13 +13,20 @@
 
 <div class="container page-body">
     <p>
-        <a asp-page="/admin">< Back to Admin</a>
+        <a asp-page="/admin">Back to Admin</a>
     </p>
     <form method="post">
         <div class="form-group">
-            @Html.LabelFor(m => m.Id)
-            @Html.TextBoxFor(m => m.Id, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Id, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.ArticleId)
+            @if (string.IsNullOrEmpty(Model.ArticleId))
+            {
+                @Html.TextBoxFor(m => m.ArticleId, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ArticleId, "", new { @class = "text-danger" })
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.ArticleId, new { @class = "form-control", @readonly = "readonly" })
+            }
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Title)

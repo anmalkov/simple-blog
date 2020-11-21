@@ -7,32 +7,30 @@
 
 <div class="page-title-small">
     <div class="container">
-        <h1>Posts</h1>
+        <h1>Articles</h1>
     </div>
 </div>
 
 <div class="container page-body">
-    <a class="btn btn-primary" role="button" asp-page="/adminarticle">Add post</a>
-    <div>
-        <table class="table">
-            <thead>
+    <a class="btn btn-primary" role="button" asp-page="/adminarticle">Add article</a>
+    <table class="table mt-3">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">URL</th>
+                <th scope="col">Title</th>
+                <th scope="col">Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in Model.Articles)
+            {
                 <tr>
-                    <th scope="col">URL</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Created</th>
+                    <td><a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Id</a></td>
+                    <td><a asp-page="/adminarticle" asp-route-id="@article.Id">@article.Title</a></td>
+                    <td>@article.Created</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var article in Model.Articles)
-                {
-                    <tr>
-                        <td>@article.Id</th>
-                        <td>@article.Title</td>
-                        <td>@article.Created</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
 </div>
 

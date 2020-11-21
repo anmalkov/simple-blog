@@ -51,6 +51,15 @@ namespace SimpleBlog.Services
 
         public async Task UpdateAsync(Article article)
         {
+            var oldArticle = await _articlesRepository.GetAsync(article.Id);
+            if (oldArticle == null)
+            {
+                return;
+            }
+
+            article.Created = oldArticle.Created;
+            article.Updated = DateTime.Now;
+
             await _articlesRepository.UpdateAsync(article);
         }
     }
