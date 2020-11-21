@@ -1,0 +1,26 @@
+﻿@page "/admin/post"
+@model SimpleBlog.Pages.AdminPostModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Admin Post";
+}
+
+<div class="page-title-small">
+    <div class="container">
+        <h1>Add new post</h1>
+    </div>
+</div>
+
+<div class="container page-body">
+    <p>
+        <a asp-page="/admin">< Back to Admin</a>
+    </p>
+    <form method="post">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Text)
+            @Html.TextAreaFor(m => m.Text, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Text, "", new { @class = "text-danger" })
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
