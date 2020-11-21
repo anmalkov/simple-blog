@@ -1,0 +1,45 @@
+﻿@page "/admin/article"
+@model SimpleBlog.Pages.AdminArticleModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Admin Article";
+}
+
+<div class="page-title-small">
+    <div class="container">
+        <h1>Add new article</h1>
+    </div>
+</div>
+
+<div class="container page-body">
+    <p>
+        <a asp-page="/admin">< Back to Admin</a>
+    </p>
+    <form method="post">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Id)
+            @Html.TextBoxFor(m => m.Id, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Id, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Body)
+            @Html.TextAreaFor(m => m.Body, 30, 0, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Body, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Tags)
+            @Html.TextBoxFor(m => m.Tags, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Tags, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group form-check">
+            @Html.CheckBoxFor(m => m.Published, new { @class = "form-check-input" })
+            @Html.LabelFor(m => m.Published, new { @class = "form-check-label" })
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

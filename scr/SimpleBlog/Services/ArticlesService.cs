@@ -20,6 +20,7 @@ namespace SimpleBlog.Services
 
         public async Task CreateAsync(Article article)
         {
+            article.Created = DateTime.Now;
             await _articlesRepository.CreateAsync(article);
         }
 

@@ -12,6 +12,27 @@
 </div>
 
 <div class="container page-body">
-    <a class="btn btn-primary" role="button" asp-page="/adminpost">Add post</a>
+    <a class="btn btn-primary" role="button" asp-page="/adminarticle">Add post</a>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">URL</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var article in Model.Articles)
+                {
+                    <tr>
+                        <td>@article.Id</th>
+                        <td>@article.Title</td>
+                        <td>@article.Created</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
