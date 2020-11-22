@@ -39,6 +39,16 @@ namespace SimpleBlog.Services
             return await _articlesRepository.GetAllAsync(tag);
         }
 
+        public async Task<List<Article>> GetAllAsync(int page, int pageSize)
+        {
+             return await _articlesRepository.GetAllAsync(page, pageSize);
+        }
+
+        public async Task<int> GetTotalNumberOfPagesAsync(int pageSize)
+        {
+            return await _articlesRepository.GetTotalNumberOfPagesAsync(pageSize);
+        }
+
         public async Task<Article> GetAsync(string id)
         {
             return await _articlesRepository.GetAsync(id);

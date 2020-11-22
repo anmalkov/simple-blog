@@ -11,5 +11,6 @@ namespace SimpleBlog.Configuration
 
         public string Title { get; set; }
         public string Owner { get; set; }
+        public int BlogPageSize { get; set; }
     }
 }

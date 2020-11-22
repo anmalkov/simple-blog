@@ -1,4 +1,4 @@
-﻿@page "/blog"
+﻿@page "/blog/{pageNumber:int?}"
 @model SimpleBlog.Pages.BlogModel
 @{
     ViewData["Title"] = "Blog";
@@ -7,5 +7,27 @@
 <div class="page-title">
     <div class="container">
         <h1 class="display-4">Blog</h1>
+    </div>
+</div>
+
+@foreach (var article in Model.Articles)
+{
+    <p>@article.Title</p>
+}
+
+<div class="container page-body">
+    <div class="row">
+        <div class="col text-left">
+            @if (Model.NextPageAvailable)
+            {
+                <a class="btn btn-primary" role="button" asp-page="/blog" asp-route-pageNumber="@(Model.PageNumber+1)">&lt; &nbsp; Older posts</a>
+            }
+        </div>
+        <div class="col text-right">
+            @if (Model.PreviousPageAvailable)
+            {
+            <a class="btn btn-primary" role="button" asp-page="/blog" asp-route-pageNumber="@(Model.PageNumber-1)">Newer posts &nbsp; &gt;</a>
+            }
+        </div>
     </div>
 </div>
