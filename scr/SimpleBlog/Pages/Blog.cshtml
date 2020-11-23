@@ -10,10 +10,16 @@
     </div>
 </div>
 
-@foreach (var article in Model.Articles)
-{
-    <p>@article.Title</p>
-}
+<main>
+    @foreach (var article in Model.Articles)
+    {
+        <article class="container">
+            <section><h2>@article.Title</h2></section>
+            <section>@article.Created</section>
+            <section>@article.Body</section>
+        </article>
+    }
+</main>
 
 <div class="container page-body">
     <div class="row">
