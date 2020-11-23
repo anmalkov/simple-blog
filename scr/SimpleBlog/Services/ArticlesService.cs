@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MarkdownSharp;
+using Microsoft.Extensions.Logging;
 using SimpleBlog.Model;
 using SimpleBlog.Repositories;
 using System;
@@ -12,6 +13,8 @@ namespace SimpleBlog.Services
     {
         private readonly ILogger<ArticlesService> _logger;
         private readonly IArticlesRepository _articlesRepository;
+        private readonly Markdown _markdown = new Markdown();
+
         public ArticlesService(ILogger<ArticlesService> logger, IArticlesRepository articlesRepository)
         {
             _logger = logger;
@@ -21,6 +24,7 @@ namespace SimpleBlog.Services
         public async Task CreateAsync(Article article)
         {
             article.Created = DateTime.Now;
+            article.HtmlBody = _markdown.Transform(article.Body);
             await _articlesRepository.CreateAsync(article);
         }
 
@@ -69,6 +73,7 @@ namespace SimpleBlog.Services
 
             article.Created = oldArticle.Created;
             article.Updated = DateTime.Now;
+            article.HtmlBody = _markdown.Transform(article.Body);
 
             await _articlesRepository.UpdateAsync(article);
         }

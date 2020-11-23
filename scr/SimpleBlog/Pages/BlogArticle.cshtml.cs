@@ -14,7 +14,7 @@ namespace SimpleBlog.Pages
         private readonly IArticlesService _articlesService;
 
         public string Title { get; set; }
-        public string Body { get; set; }
+        public string HtmlBody { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:MMMM dd, yyyy}")]
         public DateTime Created { get; set; }
@@ -31,12 +31,12 @@ namespace SimpleBlog.Pages
             if (article == null || (!article.Published && !User.Identity.IsAuthenticated))
             {
                 Title = "404 Not Found";
-                Body = "Unfortunately this blog post was not found.";
+                HtmlBody = "Unfortunately this blog post was not found.";
                 Created = DateTime.Now;
                 return;
             }
             Title = article.Title;
-            Body = article.Body;
+            HtmlBody = article.HtmlBody;
             Created = article.Created;
             Tags = new List<string>(article.Tags);
         }
