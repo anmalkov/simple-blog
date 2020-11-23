@@ -29,13 +29,25 @@ namespace SimpleBlog.Repositories
         public async Task<List<Article>> GetAllAsync()
         {
             await LoadAsync();
-            return _articles.Select(a => a.Value).ToList();
+            return _articles.Select(a => a.Value).OrderByDescending(a => a.Created).ToList();
         }
 
         public async Task<List<Article>> GetAllAsync(string tag)
         {
             await LoadAsync();
-            return _articles.Where(a => a.Value.Tags.Contains(tag)).Select(a => a.Value).ToList();
+            return _articles.Where(a => a.Value.Tags.Contains(tag)).Select(a => a.Value).OrderByDescending(a => a.Created).ToList();
+        }
+
+        public async Task<List<Article>> GetAllAsync(int page, int pageSize)
+        {
+            await LoadAsync();
+            return _articles.Select(a => a.Value).OrderByDescending(a => a.Created).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public async Task<int> GetTotalNumberOfPagesAsync(int pageSize)
+        {
+            await LoadAsync();
+            return _articles.Count() / pageSize + ((_articles.Count() % pageSize != 0) ? 1 : 0);
         }
 
         public async Task<Article> GetAsync(string id)
@@ -126,5 +138,6 @@ namespace SimpleBlog.Repositories
             await LoadAsync();
             return _articles.ContainsKey(id);
         }
+
     }
 }
