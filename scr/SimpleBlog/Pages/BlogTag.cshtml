@@ -14,7 +14,7 @@
     <ul class="list-unstyled mt-3">
         @foreach (var article in Model.Articles)
         {
-            <li>@article.Created.ToString("dd/mm/yyyy") <a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Title</a></li>
+        <li>@article.Created.ToString("MMMM dd, yyyy") <a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Title</a></li>
         }
     </ul>
 </div>

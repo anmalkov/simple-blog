@@ -10,12 +10,22 @@
     </div>
 </div>
 
-<main>
+<main class="page-body">
     @foreach (var article in Model.Articles)
     {
-        <article class="container">
-            <section><h2>@article.Title</h2></section>
-            <section>@article.Created</section>
+        <article class="container mb-4 px-0 card">
+            <section class="card-body">
+                <h2><a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Id</a></h2>
+                <p>@article.Created.ToString("MMMM dd, yyyy")</p>
+            </section>
+            <section class="card-footer py-1">
+                <ul class="list-inline mb-0">
+                    @foreach (var tag in article.Tags)
+                    {
+                        <li class="list-inline-item"><a asp-page="/blogtag" asp-route-tag="@tag">@tag</a></li>
+                    }
+                </ul>
+            </section>
         </article>
     }
 </main>
