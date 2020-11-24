@@ -1,4 +1,4 @@
-﻿using MarkdownSharp;
+﻿using Markdig;
 using Microsoft.Extensions.Logging;
 using SimpleBlog.Model;
 using SimpleBlog.Repositories;
@@ -13,7 +13,6 @@ namespace SimpleBlog.Services
     {
         private readonly ILogger<ArticlesService> _logger;
         private readonly IArticlesRepository _articlesRepository;
-        private readonly Markdown _markdown = new Markdown();
 
         public ArticlesService(ILogger<ArticlesService> logger, IArticlesRepository articlesRepository)
         {
@@ -24,7 +23,7 @@ namespace SimpleBlog.Services
         public async Task CreateAsync(Article article)
         {
             article.Created = DateTime.Now;
-            article.HtmlBody = _markdown.Transform(article.Body);
+            article.HtmlBody = GetHtmlFromMarkdown(article.Body);
             await _articlesRepository.CreateAsync(article);
         }
 
@@ -73,9 +72,21 @@ namespace SimpleBlog.Services
 
             article.Created = oldArticle.Created;
             article.Updated = DateTime.Now;
-            article.HtmlBody = _markdown.Transform(article.Body);
+            article.HtmlBody = GetHtmlFromMarkdown(article.Body);
 
             await _articlesRepository.UpdateAsync(article);
+        }
+
+        private string GetHtmlFromMarkdown(string markdownText)
+        {
+            var pipeline = new MarkdownPipelineBuilder()
+                .UsePipeTables()
+                .UseEmphasisExtras()
+                .UseTaskLists()
+                .UseBootstrap()
+                .Build();
+
+            return Markdown.ToHtml(markdownText, pipeline);
         }
     }
 }
