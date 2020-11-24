@@ -3,6 +3,15 @@
 @{
 }
 
+@section Styles {
+    <link href="~/libs/highlight/styles/vs.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/libs/highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+}
+
 <main>
     <section class="page-title">
         <div class="container">
@@ -15,7 +24,7 @@
                 <div class="col">
                     <p class="mb-0">@Html.DisplayFor(m => m.Created)</p>
                 </div>
-                <div class="col-10 text-right">
+                <div class="col-9 text-right">
                     @if (Model.Tags != null && Model.Tags.Count > 0)
                     {
                         <ul class="list-inline mb-0">
@@ -30,5 +39,11 @@
             </div>
         </div>
     </section>
-    <section class="container pt-3">@Html.Raw(Model.HtmlBody)</section>
+    <section class="container pt-3">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <p><a class="btn btn-primary" role="button" asp-page="/adminarticle" asp-route-id="@Model.Id">Edit this article</a></p>
+        }
+        @Html.Raw(Model.HtmlBody)
+    </section>
 </main>

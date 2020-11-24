@@ -13,12 +13,12 @@ namespace SimpleBlog.Pages
     {
         private readonly IArticlesService _articlesService;
 
-        public string Title { get; set; }
-        public string HtmlBody { get; set; }
-
+        public string Id { get; private set; }
+        public string Title { get; private set; }
+        public string HtmlBody { get; private set; }
         [DisplayFormat(DataFormatString = "{0:MMMM dd, yyyy}")]
-        public DateTime Created { get; set; }
-        public List<string> Tags { get; set; }
+        public DateTime Created { get; private set; }
+        public List<string> Tags { get; private set; }
 
         public ArticleModel(IArticlesService articlesService)
         {
@@ -35,6 +35,7 @@ namespace SimpleBlog.Pages
                 Created = DateTime.Now;
                 return;
             }
+            Id = article.Id;
             Title = article.Title;
             HtmlBody = article.HtmlBody;
             Created = article.Created;

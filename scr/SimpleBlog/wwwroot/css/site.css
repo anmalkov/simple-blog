@@ -24,6 +24,10 @@
     margin-bottom: 0.5em;
 }
 
+code {
+    border: 1px dashed #dddddd;
+}
+
 /* Small devices (landscape phones, 576px and up) */ 
 @media (min-width: 576px) {
 }
