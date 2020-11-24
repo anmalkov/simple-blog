@@ -3,31 +3,32 @@
 @{
 }
 
-<div class="page-title">
-    <div class="container">
-        <h1 class="display-4">@Model.Title</h1>
-    </div>
-</div>
-<div class="page-title-bottom py-1">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <p class="mb-0">@Html.DisplayFor(m => m.Created)</p>
-            </div>
-            <div class="col-10 text-right">
-                @if (Model.Tags != null && Model.Tags.Count > 0) {
-                <ul class="list-inline mb-0">
-                    <li class="list-inline-item">Tags</li>
-                    @foreach (var tag in Model.Tags)
+<main>
+    <section class="page-title">
+        <div class="container">
+            <h1 class="display-4">@Model.Title</h1>
+        </div>
+    </section>
+    <section class="page-title-bottom py-1">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p class="mb-0">@Html.DisplayFor(m => m.Created)</p>
+                </div>
+                <div class="col-10 text-right">
+                    @if (Model.Tags != null && Model.Tags.Count > 0)
                     {
-                        <li class="list-inline-item"><a asp-page="/blogtag" asp-route-tag="@tag">@tag</a></li>
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">Tags</li>
+                            @foreach (var tag in Model.Tags)
+                            {
+                                <li class="list-inline-item"><a asp-page="/blogtag" asp-route-tag="@tag">@tag</a></li>
+                            }
+                        </ul>
                     }
-                </ul>
-                }
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="container pt-3">
-    @Model.Body
-</div>
+    </section>
+    <section class="container pt-3">@Html.Raw(Model.HtmlBody)</section>
+</main>
