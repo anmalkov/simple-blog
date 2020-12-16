@@ -20,6 +20,10 @@
         </div>
     </section>
     <section class="container pt-3">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <p><a class="btn btn-primary" role="button" asp-page="/adminpage" asp-route-id="@Model.Id">Edit this page</a></p>
+        }
         @Html.Raw(Model.HtmlBody)
     </section>
 </main>
