@@ -16,7 +16,9 @@ You can easily add it to your website and you will have a simple but powerful an
 
 ## Features
 - Posts and tags management
-- Markdown for posts
+- Pages management
+- Markdown for posts and pages
+- Menu customization
 - Super fast performance
 - Simple code
 - No DB is needed
