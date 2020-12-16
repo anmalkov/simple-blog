@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SimpleBlog.Configuration
+namespace SimpleBlog.Model
 {
-    public class BlogConfiguration
+    public class SiteConfiguration
     {
-        public const string SectionName = "SimpleBlog";
-
         public string Title { get; set; }
         public string Owner { get; set; }
-        public int BlogPageSize { get; set; }
+        public int BlogPostsPageSize { get; set; }
     }
 }

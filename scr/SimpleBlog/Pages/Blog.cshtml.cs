@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
-using SimpleBlog.Configuration;
 using SimpleBlog.Model;
+using SimpleBlog.Repositories;
 using SimpleBlog.Services;
 
 namespace SimpleBlog.Pages
@@ -19,10 +20,10 @@ namespace SimpleBlog.Pages
         public bool NextPageAvailable => TotalNumberOfPages > PageNumber;
         public bool PreviousPageAvailable => PageNumber > 1;
 
-        public BlogModel(IArticlesService articlesService, IOptions<BlogConfiguration> configuration)
+        public BlogModel(IArticlesService articlesService, ISiteConfigurationRepository configRepository)
         {
             _articlesService = articlesService;
-            _pageSize = configuration.Value.BlogPageSize;
+            _pageSize = configRepository.GetAsync().Result.BlogPostsPageSize;
         }
 
         public async Task OnGet(int? pageNumber)

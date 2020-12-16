@@ -1,0 +1,33 @@
+﻿@page
+@model SimpleBlog.Pages.AdminConfigModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Admin Config";
+}
+
+<div class="page-title-small">
+    <div class="container">
+        <h1>Site configuration</h1>
+    </div>
+</div>
+
+<div class="container page-body">
+    <form method="post">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Owner)
+            @Html.TextBoxFor(m => m.Owner, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Owner, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.BlogPostsPageSize)
+            @Html.TextBoxFor(m => m.BlogPostsPageSize, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.BlogPostsPageSize, "", new { @class = "text-danger" })
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

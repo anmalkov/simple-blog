@@ -1,9 +1,8 @@
-﻿@using Microsoft.Extensions.Options
-@using SimpleBlog.Configuration
+﻿@using SimpleBlog.Repositories
 
-@inject IOptions<BlogConfiguration> BlogConfigurationOptions
+@inject ISiteConfigurationRepository configRepository
 @{ 
-    var config = BlogConfigurationOptions.Value;
+    var config = await configRepository.GetAsync();
 }
 
 <!DOCTYPE html>
