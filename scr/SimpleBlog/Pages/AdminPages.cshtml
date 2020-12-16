@@ -1,0 +1,34 @@
+﻿@page "/admin/pages"
+@model SimpleBlog.Pages.AdminPagesModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Admin Pages";
+}
+
+<div class="page-title-small">
+    <div class="container">
+        <h1>Pages</h1>
+    </div>
+</div>
+
+<div class="container page-body">
+    <a class="btn btn-primary" role="button" asp-page="/adminpage">Add page</a>
+    <table class="table mt-3">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">URL</th>
+                <th scope="col">Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pageItem in Model.Pages)
+            {
+                <tr>
+                    <td><a asp-page="/page" asp-route-id="@pageItem.Id">@pageItem.Id</a></td>
+                    <td><a asp-page="/adminpage" asp-route-id="@pageItem.Id">@pageItem.Title</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using SimpleBlog.Model;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -19,6 +21,12 @@ namespace SimpleBlog.Repositories
         {
             _logger = logger;
             _fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "pages.json");
+        }
+
+        public async Task<List<Page>> GetAllAsync()
+        {
+            await LoadAsync();
+            return _pages.Select(p => p.Value).OrderByDescending(p => p.Id).ToList();
         }
 
         public async Task<Page> GetAsync(string id)

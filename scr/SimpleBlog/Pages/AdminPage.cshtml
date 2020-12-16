@@ -1,0 +1,43 @@
+﻿@page "/admin/page/{id?}"
+@model SimpleBlog.Pages.AdminPageModel
+{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Admin Page";
+}
+
+<div class="page-title-small">
+    <div class="container">
+        <h1>Add new page</h1>
+    </div>
+</div>
+
+<div class="container page-body">
+    <p>
+        <a asp-page="/adminpages">Back to Pages</a>
+    </p>
+    <form method="post">
+        <div class="form-group">
+            @Html.LabelFor(m => m.PageId)
+            @if (string.IsNullOrEmpty(Model.PageId))
+            {
+                @Html.TextBoxFor(m => m.PageId, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PageId, "", new { @class = "text-danger" })
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.PageId, new { @class = "form-control", @readonly = "readonly" })
+            }
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Body)
+            @Html.TextAreaFor(m => m.Body, 30, 0, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Body, "", new { @class = "text-danger" })
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

@@ -8,6 +8,7 @@ namespace SimpleBlog.Services
 {
     public interface IPagesService
     {
+        Task<List<Page>> GetAllAsync();
         Task<Page> GetAsync(string id);
         Task CreateAsync(Page page);
         Task UpdateAsync(Page page);

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using SimpleBlog.Model;
 using SimpleBlog.Repositories;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SimpleBlog.Services
@@ -15,6 +16,10 @@ namespace SimpleBlog.Services
         {
             _logger = logger;
             _pagesRepository = pagesRepository;
+        }
+        public async Task<List<Page>> GetAllAsync()
+        {
+            return await _pagesRepository.GetAllAsync();
         }
 
         public async Task CreateAsync(Page page)
