@@ -1,48 +1,11 @@
-﻿@page "{pageNumber:int?}"
-@model SimpleBlog.Pages.IndexModel
+﻿@page
+@model IndexModel
 @{
-    ViewData["Title"] = "Blog";
+    ViewData["Title"] = "Index";
 }
 
 <div class="page-title">
     <div class="container">
-        <h1 class="display-4">Blog</h1>
-    </div>
-</div>
-
-<main class="page-body">
-    @foreach (var article in Model.Articles)
-    {
-        <article class="container mb-4 px-0 card">
-            <section class="card-body">
-                <h2><a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Id</a></h2>
-                <p>@article.Created.ToString("MMMM dd, yyyy")</p>
-            </section>
-            <section class="card-footer py-1">
-                <ul class="list-inline mb-0">
-                    @foreach (var tag in article.Tags)
-                    {
-                        <li class="list-inline-item"><a asp-page="/blogtag" asp-route-tag="@tag">@tag</a></li>
-                    }
-                </ul>
-            </section>
-        </article>
-    }
-</main>
-
-<div class="container page-body">
-    <div class="row">
-        <div class="col text-left">
-            @if (Model.NextPageAvailable)
-            {
-                <a class="btn btn-primary" role="button" asp-page="/blog" asp-route-pageNumber="@(Model.PageNumber+1)">&lt; &nbsp; Older posts</a>
-            }
-        </div>
-        <div class="col text-right">
-            @if (Model.PreviousPageAvailable)
-            {
-            <a class="btn btn-primary" role="button" asp-page="/blog" asp-route-pageNumber="@(Model.PageNumber-1)">Newer posts &nbsp; &gt;</a>
-            }
-        </div>
+        <h1 class="display-4">Welcome to simple blog</h1>
     </div>
 </div>

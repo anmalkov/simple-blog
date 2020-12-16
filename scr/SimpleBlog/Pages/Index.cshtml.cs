@@ -1,42 +1,25 @@
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Options;
-using SimpleBlog.Configuration;
-using SimpleBlog.Model;
-using SimpleBlog.Services;
+using Microsoft.Extensions.Logging;
 
 namespace SimpleBlog.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly IArticlesService _articlesService;
-        private readonly int _pageSize;
+        private readonly ILogger<IndexModel> _logger;
 
-        public List<Article> Articles { get; set; }
-        public int PageNumber { get; set; }
-        public int TotalNumberOfPages { get; set; }
-        public bool NextPageAvailable => TotalNumberOfPages > PageNumber;
-        public bool PreviousPageAvailable => PageNumber > 1;
-
-        public IndexModel(IArticlesService articlesService, IOptions<BlogConfiguration> configuration)
+        public IndexModel(ILogger<IndexModel> logger)
         {
-            _articlesService = articlesService;
-            _pageSize = configuration.Value.BlogPageSize;
+            _logger = logger;
         }
 
-        public async Task OnGet(int? pageNumber)
+        public void OnGet()
         {
-            if (!pageNumber.HasValue)
-            {
-                pageNumber = 1;
-            }
 
-            PageNumber = pageNumber.Value;
-
-            TotalNumberOfPages = await _articlesService.GetTotalNumberOfPagesAsync(_pageSize);
-
-            Articles = await _articlesService.GetAllAsync(PageNumber, _pageSize);
         }
     }
 }
