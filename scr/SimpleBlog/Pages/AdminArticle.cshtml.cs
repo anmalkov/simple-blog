@@ -13,7 +13,7 @@ using SimpleBlog.Services;
 namespace SimpleBlog.Pages
 {
     [Authorize]
-    public class AdminArticleModel : PageModel
+    public class AdminArticleModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly IArticlesService _articlesService;
 

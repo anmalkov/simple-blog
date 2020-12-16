@@ -11,7 +11,7 @@ using SimpleBlog.Services;
 namespace SimpleBlog.Pages
 {
     [Authorize]
-    public class AdminModel : PageModel
+    public class AdminModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly IArticlesService _articlesService;
         public List<Article> Articles { get; set; }

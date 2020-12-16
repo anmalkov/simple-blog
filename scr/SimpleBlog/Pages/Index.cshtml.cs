@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace SimpleBlog.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly ILogger<IndexModel> _logger;
 
