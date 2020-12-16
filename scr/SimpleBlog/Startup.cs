@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SimpleBlog.Configuration;
 using SimpleBlog.Repositories;
 using SimpleBlog.Services;
 
@@ -27,8 +21,6 @@ namespace SimpleBlog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<BlogConfiguration>(Configuration.GetSection(BlogConfiguration.SectionName));
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
@@ -45,6 +37,8 @@ namespace SimpleBlog
 
             services.AddSingleton<IPagesRepository, DiskPagesRepository>();
             services.AddScoped<IPagesService, PagesService>();
+
+            services.AddSingleton<ISiteConfigurationRepository, DiskSiteConfigurationRepository>();
 
             services.AddRazorPages();
         }

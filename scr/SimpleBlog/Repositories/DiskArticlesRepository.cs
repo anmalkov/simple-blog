@@ -1,14 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using SimpleBlog.Model;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.AccessControl;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SimpleBlog.Repositories
@@ -138,6 +135,5 @@ namespace SimpleBlog.Repositories
             await LoadAsync();
             return _articles.ContainsKey(id);
         }
-
     }
 }
