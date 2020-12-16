@@ -1,0 +1,36 @@
+﻿@page "admin/config/menuitem/{title?}"
+@model SimpleBlog.Pages.AdminMenuModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Admin Menu Item";
+}
+
+<div class="page-title-small">
+    <div class="container">
+        <h1>Add new menu item</h1>
+    </div>
+</div>
+
+<div class="container page-body">
+    <p>
+        <a asp-page="/adminconfig">Back to Config</a>
+    </p>
+    <form method="post">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Order)
+            @Html.TextBoxFor(m => m.Order, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Order, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.MenuTitle)
+            @Html.TextBoxFor(m => m.MenuTitle, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.MenuTitle, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Url)
+            @Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Url, "", new { @class = "text-danger" })
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

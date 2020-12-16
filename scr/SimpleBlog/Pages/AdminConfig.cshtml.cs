@@ -31,6 +31,8 @@ namespace SimpleBlog.Pages
         [Display(Name = "How many posts on one page")]
         public int BlogPostsPageSize { get; set; }
 
+        public List<MenuItem> MenuItems { get; set; }
+
         public AdminConfigModel(ISiteConfigurationRepository configRepository)
         {
             _configRepository = configRepository;
@@ -40,6 +42,8 @@ namespace SimpleBlog.Pages
         {
             var config = await _configRepository.GetAsync();
             MapFromSiteConfiguration(config);
+
+            MenuItems = await _configRepository.GetAllMenuItemsAsync();
         }
 
         public async Task OnPost()
@@ -52,6 +56,8 @@ namespace SimpleBlog.Pages
             var config = MapToSiteConfiguration();
 
             await _configRepository.UpdateAsync(config);
+
+            MenuItems = await _configRepository.GetAllMenuItemsAsync();
         }
 
         private SiteConfiguration MapToSiteConfiguration()

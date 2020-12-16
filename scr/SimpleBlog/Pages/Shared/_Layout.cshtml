@@ -3,6 +3,7 @@
 @inject ISiteConfigurationRepository configRepository
 @{ 
     var config = await configRepository.GetAsync();
+    var menuItems = await configRepository.GetAllMenuItemsAsync();
 }
 
 <!DOCTYPE html>
@@ -29,15 +30,15 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item active">
-                                <a class="nav-link" asp-area="" asp-page="/admin">Admin</a>
+                                <a class="nav-link" asp-area="" asp-page="/admin">[ Admin ]</a>
                             </li>
                         }
-                        <li class="nav-item active">
-                            <a class="nav-link" asp-area="" asp-page="/page" asp-route-id="about">About</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" asp-area="" asp-page="/blog">Blog</a>
-                        </li>
+                        @foreach (var menuItem in menuItems)
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" href="@menuItem.Url">@menuItem.Title</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

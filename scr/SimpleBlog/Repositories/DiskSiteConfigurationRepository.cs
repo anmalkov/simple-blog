@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using SimpleBlog.Model;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -61,13 +64,74 @@ namespace SimpleBlog.Repositories
                 {
                     Title = "Simple Blog",
                     Owner = "Simple Blog",
-                    BlogPostsPageSize = 20
+                    BlogPostsPageSize = 20,
+                    MenuItems = new ConcurrentDictionary<string, MenuItem>()
                 };
+                _siteConfiguration.MenuItems.TryAdd("blog", new MenuItem { Order = 10, Title = "blog", Url = "/blog" });
                 return;
             }
 
             var json = await File.ReadAllTextAsync(_fileName);
             _siteConfiguration = JsonSerializer.Deserialize<SiteConfiguration>(json);
+        }
+
+        public async Task<MenuItem> GetMenuItemAsync(string title)
+        {
+            await LoadAsync();
+            if (!_siteConfiguration.MenuItems.ContainsKey(title))
+            {
+                return null;
+            }
+            return _siteConfiguration.MenuItems[title];
+        }
+
+        public async Task CreateMenuItemAsync(MenuItem menuItem)
+        {
+            await LoadAsync();
+
+            if (_siteConfiguration.MenuItems.ContainsKey(menuItem.Title))
+            {
+                return;
+            }
+
+            _siteConfiguration.MenuItems.TryAdd(menuItem.Title, menuItem);
+
+            await SaveAsync();
+        }
+
+
+        public async Task UpdateMenuItemAsync(string oldTitle, MenuItem menuItem)
+        {
+            await LoadAsync();
+
+            if (!_siteConfiguration.MenuItems.ContainsKey(oldTitle) || _siteConfiguration.MenuItems.ContainsKey(menuItem.Title))
+            {
+                return;
+            }
+
+            _siteConfiguration.MenuItems.TryRemove(oldTitle, out MenuItem _);
+            _siteConfiguration.MenuItems.TryAdd(menuItem.Title, menuItem);
+
+            await SaveAsync();
+        }
+
+        public async Task DeleteAsync(string title)
+        {
+            await LoadAsync();
+            if (!_siteConfiguration.MenuItems.ContainsKey(title))
+            {
+                return;
+            }
+
+            _siteConfiguration.MenuItems.TryRemove(title, out MenuItem _);
+
+            await SaveAsync();
+        }
+
+        public async Task<List<MenuItem>> GetAllMenuItemsAsync()
+        {
+            await LoadAsync();
+            return _siteConfiguration.MenuItems.Select(m => m.Value).OrderBy(m => m.Order).ToList();
         }
     }
 }
