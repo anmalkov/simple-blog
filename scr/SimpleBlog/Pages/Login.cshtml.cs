@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SimpleBlog.Pages
 {
-    public class LoginModel : PageModel
+    public class LoginModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         [BindProperty]
         [Required]

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace SimpleBlog.Pages
 {
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public class ErrorModel : PageModel
+    public class ErrorModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         public string RequestId { get; set; }
 

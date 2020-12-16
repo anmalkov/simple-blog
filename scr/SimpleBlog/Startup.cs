@@ -43,6 +43,9 @@ namespace SimpleBlog
             services.AddSingleton<IArticlesRepository, DiskArticlesRepository>();
             services.AddScoped<IArticlesService, ArticlesService>();
 
+            services.AddSingleton<IPagesRepository, DiskPagesRepository>();
+            services.AddScoped<IPagesService, PagesService>();
+
             services.AddRazorPages();
         }
 

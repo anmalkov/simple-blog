@@ -9,7 +9,7 @@ using SimpleBlog.Services;
 
 namespace SimpleBlog.Pages
 {
-    public class ArticleModel : PageModel
+    public class ArticleModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly IArticlesService _articlesService;
 

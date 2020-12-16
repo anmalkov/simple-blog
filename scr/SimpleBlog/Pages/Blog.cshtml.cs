@@ -8,7 +8,7 @@ using SimpleBlog.Services;
 
 namespace SimpleBlog.Pages
 {
-    public class BlogModel : PageModel
+    public class BlogModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly IArticlesService _articlesService;
         private readonly int _pageSize;
