@@ -2,12 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SimpleBlog.Model;
+using SimpleBlog.Repositories;
 using SimpleBlog.Services;
 
 namespace SimpleBlog.Pages
@@ -16,6 +20,7 @@ namespace SimpleBlog.Pages
     public class AdminArticleModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly IArticlesService _articlesService;
+        private readonly IImagesRepository _imagesRepository;
 
         [BindProperty]
         [Required]
@@ -42,9 +47,15 @@ namespace SimpleBlog.Pages
         [Display(Name = "Published")]
         public bool Published { get; set; }
 
-        public AdminArticleModel(IArticlesService articlesService)
+        public List<string> Images { get; set; }
+
+        [BindProperty]
+        public IFormFile UploadImage { get; set; }
+
+        public AdminArticleModel(IArticlesService articlesService, IImagesRepository imagesRepository)
         {
             _articlesService = articlesService;
+            _imagesRepository = imagesRepository;
         }
 
         public async Task OnGet(string id)
@@ -52,15 +63,24 @@ namespace SimpleBlog.Pages
             if (string.IsNullOrEmpty(id))
             {
                 Published = true;
+                Images = new List<string>();
                 return;
             }
 
             var article = await _articlesService.GetAsync(id);
 
+            Images = (await _imagesRepository.GetAllAsync(id)).Select(i => Path.GetFileName(i)).ToList();
+
             MapFromArticle(article);
         }
 
-        public async Task<IActionResult> OnPost(string id)
+        public async Task<IActionResult> OnPostImageAsync(string id)
+        {
+            await _imagesRepository.UploadAsync(id, UploadImage);
+            return RedirectToPage("/adminarticle", new { id = id });
+        }
+
+        public async Task<IActionResult> OnPostDataAsync(string id)
         {
             if (!ModelState.IsValid)
             {

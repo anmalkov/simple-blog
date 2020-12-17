@@ -46,18 +46,18 @@ namespace SimpleBlog.Pages
             MenuItems = await _configRepository.GetAllMenuItemsAsync();
         }
 
-        public async Task OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
-                return;
+                return Page();
             }
 
             var config = MapToSiteConfiguration();
 
             await _configRepository.UpdateAsync(config);
 
-            MenuItems = await _configRepository.GetAllMenuItemsAsync();
+            return RedirectToPage("/adminconfig");
         }
 
         private SiteConfiguration MapToSiteConfiguration()
