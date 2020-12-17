@@ -24,6 +24,10 @@ namespace SimpleBlog.Repositories
         public Task<List<string>> GetAllAsync(string articleId)
         {
             var articleDirectory = Path.Combine(_directoryName, articleId);
+            if (!Directory.Exists(articleDirectory))
+            {
+                return Task.FromResult(new List<string>());
+            }
             var images = Directory.GetFiles(articleDirectory).ToList();
             return Task.FromResult(images);
         }
