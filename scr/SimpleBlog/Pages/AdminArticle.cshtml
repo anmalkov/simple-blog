@@ -35,8 +35,9 @@
                         <td><a href="/blogimages/@Model.ArticleId/@file" target="_blank" rel="noopener noreferrer">@file</a></td>
                         <td>
                             <ul class="list-inline">
-                                <li><a href="javascript:addImageReferenceToTextArea('Body','@Model.ArticleId','@System.IO.Path.GetFileNameWithoutExtension(file)','@file')">Add reference to markdown</a></li>
-                                <li><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeleteImage" asp-route-fileName="@file">Delete</button></li>
+                                <li class="list-inline-item"><a href="javascript:addImageReferenceToTextArea('Body','@Model.ArticleId','@System.IO.Path.GetFileNameWithoutExtension(file)','@file')">Add reference to markdown</a></li>
+                                <li class="list-inline-item">|</li>
+                                <li class="list-inline-item"><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeleteImage" asp-route-fileName="@file">Delete</button></li>
                             </ul>
                         </td>
                     </tr>
@@ -46,7 +47,7 @@
     </form>
     <form method="post" enctype="multipart/form-data">
         <div class="mb-3">
-            <input class="form-control" type="file" asp-for="UploadImages" multiple />
+            <input class="form-control py-1" type="file" asp-for="UploadImages" multiple />
         </div>
         <button type="submit" class="btn btn-primary" asp-page-handler="Image">Upload image</button>
     </form>
