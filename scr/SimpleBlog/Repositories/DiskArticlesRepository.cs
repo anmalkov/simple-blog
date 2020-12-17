@@ -20,7 +20,7 @@ namespace SimpleBlog.Repositories
         public DiskArticlesRepository(ILogger<DiskArticlesRepository> logger)
         {
             _logger = logger;
-            _fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "articles.json");
+            _fileName = Path.Combine(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data"), "articles.json");
         }
 
         public async Task<List<Article>> GetAllAsync()

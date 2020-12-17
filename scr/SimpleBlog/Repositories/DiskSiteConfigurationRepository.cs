@@ -20,7 +20,7 @@ namespace SimpleBlog.Repositories
         public DiskSiteConfigurationRepository(ILogger<DiskSiteConfigurationRepository> logger)
         {
             _logger = logger;
-            _fileName = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "config.json");
+            _fileName = Path.Combine(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data"), "config.json");
         }
 
         public async Task<SiteConfiguration> GetAsync()
