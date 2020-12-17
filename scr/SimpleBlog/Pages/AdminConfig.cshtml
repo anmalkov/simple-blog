@@ -32,24 +32,29 @@
     </form>
     <h3 class="mt-3">Menu</h3>
     <a class="btn btn-primary" role="button" asp-page="/adminmenu">Add menu item</a>
-    <table class="table mt-3">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">Order</th>
-                <th scope="col">Title</th>
-                <th scope="col">URL</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var menuItem in Model.MenuItems)
-            {
-            <tr>
-                <td>@menuItem.Order</td>
-                <td><a asp-page="/adminmenu" asp-route-title="@menuItem.Title">@menuItem.Title</a></td>
-                <td>@menuItem.Url</td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    <form method="post">
+        <table class="table mt-3">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Order</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">URL</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var menuItem in Model.MenuItems)
+                {
+                <tr>
+                    <td>@menuItem.Order</td>
+                    <td><a asp-page="/adminmenu" asp-route-title="@menuItem.Title">@menuItem.Title</a></td>
+                    <td>@menuItem.Url</td>
+                    <td><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeleteMenuItem" asp-route-title="@menuItem.Title">Delete</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </form>
 </div>
 

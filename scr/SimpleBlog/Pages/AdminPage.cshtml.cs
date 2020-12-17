@@ -37,7 +37,7 @@ namespace SimpleBlog.Pages
         public List<string> Images { get; set; }
 
         [BindProperty]
-        public IFormFile UploadImage { get; set; }
+        public List<IFormFile> UploadImages { get; set; }
 
         public AdminPageModel(IPagesService pagesService, IImagesRepository imagesRepository)
         {
@@ -61,7 +61,16 @@ namespace SimpleBlog.Pages
 
         public async Task<IActionResult> OnPostImageAsync(string id)
         {
-            await _imagesRepository.UploadAsync(id, UploadImage);
+            foreach (var image in UploadImages)
+            {
+                await _imagesRepository.UploadAsync(id, image);
+            }
+            return RedirectToPage("/adminpage", new { id = id });
+        }
+
+        public async Task<IActionResult> OnPostDeleteImageAsync(string id, string fileName)
+        {
+            await _imagesRepository.DeleteAsync(id, fileName);
             return RedirectToPage("/adminpage", new { id = id });
         }
 

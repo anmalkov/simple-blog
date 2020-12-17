@@ -20,6 +20,7 @@
         <a asp-page="/adminpages">Back to Pages</a>
     </p>
     <h3>Images</h3>
+    <form method="post">
     <table class="table mt-3">
         <thead class="thead-light">
             <tr>
@@ -32,14 +33,20 @@
             {
                 <tr>
                     <td><a href="/blogimages/@Model.PageId/@file" target="_blank" rel="noopener noreferrer">@file</a></td>
-                    <td><a href="javascript:addImageReferenceToTextArea('Body','@Model.PageId','@System.IO.Path.GetFileNameWithoutExtension(file)','@file')">Add reference to markdown</a></td>
+                    <td>
+                        <ul class="list-inline">
+                            <li><a class="mt-1" href="javascript:addImageReferenceToTextArea('Body','@Model.PageId','@System.IO.Path.GetFileNameWithoutExtension(file)','@file')">Add reference to markdown</a></li>
+                            <li><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeleteImage" asp-route-fileName="@file">Delete</button></li>
+                        </ul>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+    </form>
     <form method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <input type="file" asp-for="UploadImage" />
+        <div class="mb-3">
+            <input class="form-control" type="file" asp-for="UploadImages" multiple />
         </div>
         <button type="submit" class="btn btn-primary" asp-page-handler="Image">Upload image</button>
     </form>
