@@ -21,28 +21,28 @@
     </p>
     <h3>Images</h3>
     <form method="post">
-    <table class="table mt-3">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">File name</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var file in Model.Images)
-            {
+        <table class="table mt-3">
+            <thead class="thead-light">
                 <tr>
-                    <td><a href="/blogimages/@Model.ArticleId/@file" target="_blank" rel="noopener noreferrer">@file</a></td>
-                    <td>
-                        <ul class="list-inline">
-                            <li><a href="javascript:addImageReferenceToTextArea('Body','@Model.ArticleId','@System.IO.Path.GetFileNameWithoutExtension(file)','@file')">Add reference to markdown</a></li>
-                            <li><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeleteImage" asp-route-fileName="@file">Delete</button></li>
-                        </ul>
-                    </td>
+                    <th scope="col">File name</th>
+                    <th scope="col">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var file in Model.Images)
+                {
+                    <tr>
+                        <td><a href="/blogimages/@Model.ArticleId/@file" target="_blank" rel="noopener noreferrer">@file</a></td>
+                        <td>
+                            <ul class="list-inline">
+                                <li><a href="javascript:addImageReferenceToTextArea('Body','@Model.ArticleId','@System.IO.Path.GetFileNameWithoutExtension(file)','@file')">Add reference to markdown</a></li>
+                                <li><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeleteImage" asp-route-fileName="@file">Delete</button></li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </form>
     <form method="post" enctype="multipart/form-data">
         <div class="mb-3">

@@ -13,24 +13,28 @@
 
 <div class="container page-body">
     <a class="btn btn-primary" role="button" asp-page="/adminarticle">Add post</a>
-    <table class="table mt-3">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">URL</th>
-                <th scope="col">Title</th>
-                <th scope="col">Created</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var article in Model.Articles)
-            {
+    <form method="post">
+        <table class="table mt-3">
+            <thead class="thead-light">
                 <tr>
-                    <td><a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Id</a></td>
-                    <td><a asp-page="/adminarticle" asp-route-id="@article.Id">@article.Title</a></td>
-                    <td>@article.Created</td>
+                    <th scope="col">URL</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var article in Model.Articles)
+                {
+                    <tr>
+                        <td><a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Id</a></td>
+                        <td><a asp-page="/adminarticle" asp-route-id="@article.Id">@article.Title</a></td>
+                        <td>@article.Created</td>
+                        <td><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeleteArticle" asp-route-id="@article.Id">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
 </div>
 

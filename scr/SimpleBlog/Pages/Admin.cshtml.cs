@@ -25,5 +25,11 @@ namespace SimpleBlog.Pages
         {
             Articles = await _articlesService.GetAllAsync();
         }
+
+        public async Task<IActionResult> OnPostDeleteArticleAsync(string id)
+        {
+            await _articlesService.DeteleAsync(id);
+            return RedirectToPage("/admin");
+        }
     }
 }
