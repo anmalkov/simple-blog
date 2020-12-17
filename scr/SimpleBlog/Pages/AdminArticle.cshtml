@@ -5,16 +5,53 @@
     ViewData["Title"] = "Admin Article";
 }
 
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}
+
 <div class="page-title-small">
     <div class="container">
-        <h1>Add new article</h1>
+        <h1>Add new post</h1>
     </div>
 </div>
 
 <div class="container page-body">
     <p>
-        <a asp-page="/admin">Back to Admin</a>
+        <a asp-page="/admin">Back to Posts</a>
     </p>
+    <h3>Images</h3>
+    <form method="post">
+        <table class="table mt-3">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">File name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var file in Model.Images)
+                {
+                    <tr>
+                        <td><a href="/blogimages/@Model.ArticleId/@file" target="_blank" rel="noopener noreferrer">@file</a></td>
+                        <td>
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><a href="javascript:addImageReferenceToTextArea('Body','@Model.ArticleId','@System.IO.Path.GetFileNameWithoutExtension(file)','@file')">Add reference to markdown</a></li>
+                                <li class="list-inline-item">|</li>
+                                <li class="list-inline-item"><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeleteImage" asp-route-fileName="@file">Delete</button></li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <input class="form-control py-1" type="file" asp-for="UploadImages" multiple />
+        </div>
+        <button type="submit" class="btn btn-primary" asp-page-handler="Image">Upload image</button>
+    </form>
+    <h3 class="mt-4">Post</h3>
     <form method="post">
         <div class="form-group">
             @Html.LabelFor(m => m.ArticleId)
@@ -47,6 +84,6 @@
             @Html.CheckBoxFor(m => m.Published, new { @class = "form-check-input" })
             @Html.LabelFor(m => m.Published, new { @class = "form-check-label" })
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" asp-page-handler="Data">Save</button>
     </form>
 </div>

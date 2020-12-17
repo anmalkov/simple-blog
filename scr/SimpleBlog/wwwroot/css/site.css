@@ -24,6 +24,12 @@
     margin-bottom: 0.5em;
 }
 
+.button-link-with-links {
+    margin-top: -4px;
+    padding: 0;
+    border: none;
+}
+
 code {
     border: 1px dashed #dddddd;
 }

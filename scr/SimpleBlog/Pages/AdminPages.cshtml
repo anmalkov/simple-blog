@@ -13,22 +13,26 @@
 
 <div class="container page-body">
     <a class="btn btn-primary" role="button" asp-page="/adminpage">Add page</a>
-    <table class="table mt-3">
-        <thead class="thead-light">
-            <tr>
-                <th scope="col">URL</th>
-                <th scope="col">Title</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var pageItem in Model.Pages)
-            {
+    <form method="post">
+        <table class="table mt-3">
+            <thead class="thead-light">
                 <tr>
-                    <td><a asp-page="/page" asp-route-id="@pageItem.Id">@pageItem.Id</a></td>
-                    <td><a asp-page="/adminpage" asp-route-id="@pageItem.Id">@pageItem.Title</a></td>
+                    <th scope="col">URL</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var pageItem in Model.Pages)
+                {
+                    <tr>
+                        <td><a asp-page="/page" asp-route-id="@pageItem.Id">@pageItem.Id</a></td>
+                        <td><a asp-page="/adminpage" asp-route-id="@pageItem.Id">@pageItem.Title</a></td>
+                        <td><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeletePage" asp-route-id="@pageItem.Id">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
 </div>
 

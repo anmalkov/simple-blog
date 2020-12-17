@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using SimpleBlog.Repositories;
 using SimpleBlog.Services;
+using System.IO;
+using System.Reflection;
 
 namespace SimpleBlog
 {
@@ -39,6 +42,7 @@ namespace SimpleBlog
             services.AddScoped<IPagesService, PagesService>();
 
             services.AddSingleton<ISiteConfigurationRepository, DiskSiteConfigurationRepository>();
+            services.AddSingleton<IImagesRepository, DiskImagesRepository>();
 
             services.AddRazorPages();
         }
@@ -58,7 +62,13 @@ namespace SimpleBlog
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data"), "images")),
+                RequestPath = "/blogimages"
+            });
 
             app.UseRouting();
 
