@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: dotnet restore
+        run: dotnet restore ./src/**/*.csproj
+      - name: dotnet build
+        run: dotnet build --configuration Release --no-restore ./src/**/*.csproj
+      - name: buildah
+        run: buildah --help
