@@ -1,5 +1,5 @@
-version='1.0.${GITHUB_RUN_NUMBER}'
-echo version
+version="1.0.${GITHUB_RUN_NUMBER}"
+echo $version
 
 echo 'create build container'
 buildcon=$(buildah from mcr.microsoft.com/dotnet/sdk:5.0-buster-slim)
