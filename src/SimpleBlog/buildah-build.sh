@@ -1,11 +1,8 @@
-GITHUB_RUN_NUMBER=$1
+version=$1
 DOCKERHUB_USERNAME=$2
 DOCKERHUB_TOKEN=$3
 
-echo $GITHUB_RUN_NUMBER
-version="1.0.$GITHUB_RUN_NUMBER"
-echo $version
-echo $DOCKERHUB_USERNAME
+echo "building version $version"
 
 echo 'create build container'
 buildcon=$(buildah from mcr.microsoft.com/dotnet/sdk:5.0-buster-slim)
