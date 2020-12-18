@@ -65,13 +65,13 @@ namespace SimpleBlog.Pages
             {
                 await _imagesRepository.UploadAsync(id, image);
             }
-            return RedirectToPage("/adminpage", new { id = id });
+            return RedirectToPage("/adminpage", new { id });
         }
 
         public async Task<IActionResult> OnPostDeleteImageAsync(string id, string fileName)
         {
             await _imagesRepository.DeleteAsync(id, fileName);
-            return RedirectToPage("/adminpage", new { id = id });
+            return RedirectToPage("/adminpage", new { id });
         }
 
         public async Task<IActionResult> OnPostDataAsync(string id)

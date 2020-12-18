@@ -50,8 +50,10 @@ namespace SimpleBlog.Pages
                 return Page();
             }
 
-            var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.Name, "admin"));
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, "admin")
+            };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using SimpleBlog.Extensions;
 using SimpleBlog.Repositories;
 using SimpleBlog.Services;
 using System.IO;
@@ -64,11 +65,7 @@ namespace SimpleBlog
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "data"), "images")),
-                RequestPath = "/blogimages"
-            });
+            app.UseBlogImages();
 
             app.UseRouting();
 
