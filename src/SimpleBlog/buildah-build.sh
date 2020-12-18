@@ -1,4 +1,4 @@
-version="1.0.${GITHUB_RUN_NUMBER}"
+version="1.0."${GITHUB_RUN_NUMBER}
 echo $version
 
 echo 'create build container'
