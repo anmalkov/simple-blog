@@ -18,5 +18,8 @@ jobs:
         run: dotnet restore ./src/**/*.csproj
       - name: dotnet build
         run: dotnet build --configuration Release --no-restore ./src/**/*.csproj
-      - name: buildah
-        run: buildah --help
+      - name: create an image and push
+        run: |
+          cd ./src/SimpleBlog/
+          chmod +x ./buildah-build.sh
+          ./buildah-build.sh
