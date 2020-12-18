@@ -77,7 +77,7 @@ namespace SimpleBlog.Pages
         public async Task<IActionResult> OnPostDeleteImageAsync(string id, string fileName)
         {
             await _imagesRepository.DeleteAsync(id, fileName);
-            return RedirectToPage("/adminarticle", new { id = id });
+            return RedirectToPage("/adminarticle", new { id });
         }
 
         public async Task<IActionResult> OnPostImageAsync(string id)
@@ -86,7 +86,7 @@ namespace SimpleBlog.Pages
             {
                 await _imagesRepository.UploadAsync(id, image);
             }
-            return RedirectToPage("/adminarticle", new { id = id });
+            return RedirectToPage("/adminarticle", new { id });
         }
 
         public async Task<IActionResult> OnPostDataAsync(string id)

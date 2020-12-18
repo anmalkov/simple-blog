@@ -27,9 +27,9 @@
             @Html.ValidationMessageFor(m => m.MenuTitle, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Url)
-            @Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Url, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.MenuUrl)
+            @Html.TextBoxFor(m => m.MenuUrl, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.MenuUrl, "", new { @class = "text-danger" })
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>

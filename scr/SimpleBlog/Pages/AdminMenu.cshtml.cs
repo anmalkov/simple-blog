@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using SimpleBlog.Model;
 using SimpleBlog.Repositories;
 
@@ -29,7 +25,7 @@ namespace SimpleBlog.Pages
         [BindProperty]
         [Required]
         [Display(Name = "Url")]
-        public string Url { get; set; }
+        public string MenuUrl { get; set; }
 
         public AdminMenuModel(ISiteConfigurationRepository configRepository)
         {
@@ -74,7 +70,7 @@ namespace SimpleBlog.Pages
             {
                 Order = Order,
                 Title = MenuTitle,
-                Url = Url
+                Url = MenuUrl
             };
         }
 
@@ -82,7 +78,7 @@ namespace SimpleBlog.Pages
         {
             Order = menuItem.Order;
             MenuTitle = menuItem.Title;
-            Url = menuItem.Url;
+            MenuUrl = menuItem.Url;
         }
     }
 }
