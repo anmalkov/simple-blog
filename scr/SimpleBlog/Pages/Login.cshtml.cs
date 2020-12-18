@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SimpleBlog.Pages
 {
     public class LoginModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
+        private const string AccessCodeEnvironmentVariableName = "SIMPLEBLOG_ACCESSCODE";
+
         [BindProperty]
         [Required]
         [Display(Name = "Enter your code")]
@@ -38,7 +38,13 @@ namespace SimpleBlog.Pages
                 return Page();
             }
 
-            if (Code != "Test123")
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(AccessCodeEnvironmentVariableName)))
+            {
+                ModelState.AddModelError("Code", "The code is not configured, you can find how to configure it in the documentation");
+                return Page();
+            }
+
+            if (Code != Environment.GetEnvironmentVariable(AccessCodeEnvironmentVariableName))
             {
                 ModelState.AddModelError("Code", "The code is not correct");
                 return Page();
@@ -52,9 +58,9 @@ namespace SimpleBlog.Pages
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
     
-            if (!string.IsNullOrEmpty(ReturnUrl) && ReturnUrl.StartsWith('/'))
+            if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
             {
-                return RedirectToPage(ReturnUrl);
+                return Redirect(ReturnUrl);
             }
             return RedirectToPage("/admin");
         }
