@@ -1,4 +1,4 @@
-version='1.0.1'
+version='1.0.$GITHUB_RUN_NUMBER'
 
 echo 'create build container'
 buildcon=$(buildah from mcr.microsoft.com/dotnet/sdk:5.0-buster-slim)
@@ -36,6 +36,11 @@ buildah config --entrypoint 'dotnet SimpleBlog.dll' $finalcon
 
 echo 'commit image'
 buildah commit --format=docker $finalcon anmalkov/simple-blog:$version
+
+echo 'push to docker hub'
+buildah push --creds $DOCKERHUB_USERNAME:$DOCKERHUB_TOKEN anmalkov/simple-blog:$version docker://registry.hub.docker.com/anmalkov/simple-blog:$version
+buildah push --creds $DOCKERHUB_USERNAME:$DOCKERHUB_TOKEN anmalkov/simple-blog:$version docker://registry.hub.docker.com/anmalkov/simple-blog:latest
+
 
 echo 'umount everything'
 buildah umount --all
