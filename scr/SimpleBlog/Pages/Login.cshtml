@@ -13,7 +13,7 @@
     <form method="post">
         <div class="form-group">
             @Html.LabelFor(m => m.Code)
-            @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+            @Html.PasswordFor(m => m.Code, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger" })
             @*<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>*@
         </div>
