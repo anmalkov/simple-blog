@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: run
-        run: echo $GITHUB_RUN_NUMBER
       - name: dotnet restore
         run: dotnet restore ./src/**/*.csproj
       - name: dotnet build
@@ -24,7 +22,7 @@ jobs:
         run: |
           cd ./src/SimpleBlog/
           chmod +x ./buildah-build.sh
-          sudo ./buildah-build.sh '1.0.$GITHUB_RUN_NUMBER' ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_TOKEN }}
+          sudo ./buildah-build.sh $GITHUB_RUN_NUMBER ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_TOKEN }}
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
