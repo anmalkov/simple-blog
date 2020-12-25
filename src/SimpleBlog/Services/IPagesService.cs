@@ -10,6 +10,7 @@ namespace SimpleBlog.Services
     {
         Task<List<Page>> GetAllAsync();
         Task<Page> GetAsync(string id);
+        Task<Page> GetIndexAsync();
         Task CreateAsync(Page page);
         Task UpdateAsync(Page page);
         Task DeleteAsync(string id);
