@@ -40,6 +40,8 @@ namespace SimpleBlog.Pages
             HtmlBody = article.HtmlBody;
             Created = article.Created;
             Tags = new List<string>(article.Tags);
+
+            await _articlesService.IncrementViewsCounterAsync(article.Id);
         }
     }
 }

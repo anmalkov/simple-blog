@@ -20,6 +20,9 @@
                     <th scope="col">URL</th>
                     <th scope="col">Title</th>
                     <th scope="col">Created</th>
+                    <th scope="col">Published</th>
+                    <th scope="col">Views</th>
+                    <th scope="col">Comments</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -30,6 +33,9 @@
                         <td><a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Id</a></td>
                         <td><a asp-page="/adminarticle" asp-route-id="@article.Id">@article.Title</a></td>
                         <td>@article.Created</td>
+                        <td>@article.Published</td>
+                        <td>@article.ViewsCount</td>
+                        <td>@article.CommentsCount</td>
                         <td><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeleteArticle" asp-route-id="@article.Id">Delete</button></td>
                     </tr>
                 }

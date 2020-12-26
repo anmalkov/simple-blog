@@ -19,5 +19,8 @@ namespace SimpleBlog.Services
         Task UpdateAsync(Article article);
         Task DeteleAsync(string id);
         Task ReleaseAsync(string id);
+
+        Task<List<ArticleInfo>> GetAllArticleInfosAsync();
+        Task IncrementViewsCounterAsync(string id);
     }
 }
