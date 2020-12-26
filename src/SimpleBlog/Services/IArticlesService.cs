@@ -11,6 +11,8 @@ namespace SimpleBlog.Services
         Task<List<Article>> GetAllAsync();
         Task<List<Article>> GetAllAsync(string tag);
         Task<List<Article>> GetAllAsync(int page, int pageSize);
+        Task<List<Article>> GetLatestAsync(int articlesCount);
+        Task<List<Article>> GetMostPopularAsync(int articlesCount);
         Task<int> GetTotalNumberOfPagesAsync(int pageSize);
         Task<Article> GetAsync(string id);
         Task CreateAsync(Article article);

@@ -30,7 +30,8 @@ namespace SimpleBlog.Repositories
             {
                 Title = _siteConfiguration.Title,
                 Owner = _siteConfiguration.Owner,
-                BlogPostsPageSize = _siteConfiguration.BlogPostsPageSize
+                BlogPostsPageSize = _siteConfiguration.BlogPostsPageSize,
+                LatestBlogPostsCount = _siteConfiguration.LatestBlogPostsCount
             };
         }
 
@@ -41,13 +42,14 @@ namespace SimpleBlog.Repositories
             _siteConfiguration.Title = config.Title;
             _siteConfiguration.Owner = config.Owner;
             _siteConfiguration.BlogPostsPageSize = config.BlogPostsPageSize;
+            _siteConfiguration.LatestBlogPostsCount = config.LatestBlogPostsCount;
 
             await SaveAsync();
         }
 
         private async Task SaveAsync()
         {
-            var json = JsonSerializer.Serialize<SiteConfiguration>(_siteConfiguration);
+            var json = JsonSerializer.Serialize(_siteConfiguration);
             await File.WriteAllTextAsync(_fileName, json);
         }
 
@@ -65,6 +67,7 @@ namespace SimpleBlog.Repositories
                     Title = "Simple Blog",
                     Owner = "Simple Blog",
                     BlogPostsPageSize = 20,
+                    LatestBlogPostsCount = 7,
                     MenuItems = new ConcurrentDictionary<string, MenuItem>()
                 };
                 _siteConfiguration.MenuItems.TryAdd("blog", new MenuItem { Order = 10, Title = "blog", Url = "/blog" });

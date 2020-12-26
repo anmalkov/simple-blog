@@ -31,6 +31,11 @@ namespace SimpleBlog.Pages
         [Display(Name = "How many posts on one page")]
         public int BlogPostsPageSize { get; set; }
 
+        [BindProperty]
+        [Required]
+        [Display(Name = "How many latest and popular posts on index page")]
+        public int LatestBlogPostsCount { get; set; }
+
         public List<MenuItem> MenuItems { get; set; }
 
         public AdminConfigModel(ISiteConfigurationRepository configRepository)
@@ -72,7 +77,8 @@ namespace SimpleBlog.Pages
             {
                 Title = Title,
                 Owner = Owner,
-                BlogPostsPageSize = BlogPostsPageSize
+                BlogPostsPageSize = BlogPostsPageSize,
+                LatestBlogPostsCount = LatestBlogPostsCount
             };
         }
 
@@ -81,6 +87,7 @@ namespace SimpleBlog.Pages
             Title = config.Title;
             Owner = config.Owner;
             BlogPostsPageSize = config.BlogPostsPageSize;
+            LatestBlogPostsCount = config.LatestBlogPostsCount;
         }
     }
 }

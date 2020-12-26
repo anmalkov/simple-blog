@@ -10,6 +10,7 @@ namespace SimpleBlog.Model
     {
         public string Title { get; set; }
         public string Owner { get; set; }
+        public int LatestBlogPostsCount { get; set; }
         public int BlogPostsPageSize { get; set; }
         public ConcurrentDictionary<string, MenuItem> MenuItems { get; set; }
     }
