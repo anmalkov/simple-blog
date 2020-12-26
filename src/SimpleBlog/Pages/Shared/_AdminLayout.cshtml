@@ -3,6 +3,8 @@
 @inject ISiteConfigurationRepository configRepository
 @{
     var config = await configRepository.GetAsync();
+    var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+    var simpleBlogVersion = $"{version.Major}.{version.Minor}.{version.Build}";
 }
 
 <!DOCTYPE html>
@@ -48,7 +50,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; Copyright 2020, <a asp-area="" asp-page="/index">@config.Owner</a>. Powered by <a href="https://github.com/anmalkov/simple-blog">SimpleBlog v0.1</a> on <a href="https://dotnet.microsoft.com/download/dotnet/5.0">.NET @Environment.Version</a>
+            &copy; Copyright 2020, <a asp-area="" asp-page="/index">@config.Owner</a>. Powered by <a href="https://github.com/anmalkov/simple-blog">SimpleBlog @simpleBlogVersion</a> on <a href="https://dotnet.microsoft.com/download/dotnet/5.0">.NET @Environment.Version</a>
         </div>
     </footer>
 

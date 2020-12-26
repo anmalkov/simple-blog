@@ -15,7 +15,7 @@
     {
         <article class="container mb-4 px-0 card">
             <section class="card-body">
-                <h2><a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Id</a></h2>
+                <h2><a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Title</a></h2>
                 <p>@article.Created.ToString("MMMM dd, yyyy")</p>
             </section>
             <section class="card-footer py-1">

@@ -4,8 +4,49 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="page-title">
-    <div class="container">
-        <h1 class="display-4">Welcome to simple blog</h1>
-    </div>
-</div>
+<main>
+    <section class="page-title">
+        <div class="container">
+            <h1 class="display-4">@Model.Title</h1>
+        </div>
+    </section>
+    <section class="container pt-3">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <p><a class="btn btn-primary" role="button" asp-page="/adminpage" asp-route-id="@Model.Id">Edit this page</a></p>
+        }
+        @Html.Raw(Model.HtmlBody)
+    </section>
+    <section class="container pt-3">
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-secondary" role="alert">
+                    <h3>Recent posts</h3>
+                </div>
+                <ul class="list-unstyled">
+                    @foreach (var article in Model.LatestArticles)
+                    {
+                        <li>
+                            <a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Title</a>
+                            <p>@article.Created.ToString("MMMM dd, yyyy")</p>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="col">
+                <div class="alert alert-secondary" role="alert">
+                    <h3>Popular posts</h3>
+                </div>
+                <ul class="list-unstyled">
+                    @foreach (var article in Model.PopularArticles)
+                    {
+                        <li>
+                            <a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Title</a>
+                            <p>@article.Created.ToString("MMMM dd, yyyy")</p>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>

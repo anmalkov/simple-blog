@@ -15,7 +15,7 @@ namespace SimpleBlog.Repositories
         private readonly ILogger<DiskPagesRepository> _logger;
 
         private ConcurrentDictionary<string, Page> _pages;
-        private readonly string _fileName;
+        private readonly string _fileName;        
 
         public DiskPagesRepository(ILogger<DiskPagesRepository> logger)
         {

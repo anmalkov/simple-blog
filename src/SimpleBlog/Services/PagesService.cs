@@ -3,12 +3,16 @@ using Microsoft.Extensions.Logging;
 using SimpleBlog.Model;
 using SimpleBlog.Repositories;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SimpleBlog.Services
 {
     public class PagesService : IPagesService
     {
+        private const string IndexPageId = "index";
+
         private readonly ILogger<PagesService> _logger;
         private readonly IPagesRepository _pagesRepository;
 
@@ -17,9 +21,10 @@ namespace SimpleBlog.Services
             _logger = logger;
             _pagesRepository = pagesRepository;
         }
+
         public async Task<List<Page>> GetAllAsync()
         {
-            return await _pagesRepository.GetAllAsync();
+            return (await _pagesRepository.GetAllAsync()).Where(p => p.Id != IndexPageId).ToList();
         }
 
         public async Task CreateAsync(Page page)
@@ -38,6 +43,15 @@ namespace SimpleBlog.Services
             return await _pagesRepository.GetAsync(id);
         }
 
+        public async Task<Page> GetIndexAsync()
+        {
+            if (!await _pagesRepository.ExistsAsync(IndexPageId))
+            {
+                await AddIndexPageAsync();
+            }
+            return await GetAsync(IndexPageId);
+        }
+
         public async Task UpdateAsync(Page page)
         {
             page.HtmlBody = GetHtmlFromMarkdown(page.Body);
@@ -54,6 +68,16 @@ namespace SimpleBlog.Services
                 .Build();
 
             return Markdown.ToHtml(markdownText, pipeline);
+        }
+
+        private async Task AddIndexPageAsync()
+        {
+            await CreateAsync(new Page
+            {
+                Id = IndexPageId,
+                Title = "Welcome to simple-blog",
+                Body = "This is the simplest blog engine written on .net 5\r\n\r\nYou can get more information and contribute to the project on [GitHub](https://github.com/anmalkov/simple-blog)."
+            });
         }
     }
 }
