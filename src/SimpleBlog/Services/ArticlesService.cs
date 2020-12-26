@@ -13,11 +13,13 @@ namespace SimpleBlog.Services
     {
         private readonly ILogger<ArticlesService> _logger;
         private readonly IArticlesRepository _articlesRepository;
+        private readonly IArticleInfoRepository _articleInfoRepository;
 
-        public ArticlesService(ILogger<ArticlesService> logger, IArticlesRepository articlesRepository)
+        public ArticlesService(ILogger<ArticlesService> logger, IArticlesRepository articlesRepository, IArticleInfoRepository articleInfoRepository)
         {
             _logger = logger;
             _articlesRepository = articlesRepository;
+            _articleInfoRepository = articleInfoRepository;
         }
 
         public async Task CreateAsync(Article article)
@@ -54,7 +56,13 @@ namespace SimpleBlog.Services
 
         public async Task<List<Article>> GetMostPopularAsync(int articlesCount)
         {
-            return await GetAllAsync(1, articlesCount);
+            var articleInfos = await _articleInfoRepository.GetAllOrderedByViewsCountAsync(articlesCount);
+            var articles = new List<Article>();
+            foreach (var articleInfo in articleInfos)
+            {
+                articles.Add(await _articlesRepository.GetAsync(articleInfo.ArticleId));
+            }
+            return articles;
         }
 
         public async Task<int> GetTotalNumberOfPagesAsync(int pageSize)
@@ -87,6 +95,18 @@ namespace SimpleBlog.Services
             await _articlesRepository.UpdateAsync(article);
         }
 
+
+        public async Task<List<ArticleInfo>> GetAllArticleInfosAsync()
+        {
+            return await _articleInfoRepository.GetAllAsync();
+        }
+
+        public async Task IncrementViewsCounterAsync(string id)
+        {
+            await _articleInfoRepository.IncrementViewsCounterAsync(id);
+        }
+
+
         private string GetHtmlFromMarkdown(string markdownText)
         {
             var pipeline = new MarkdownPipelineBuilder()
@@ -98,5 +118,6 @@ namespace SimpleBlog.Services
 
             return Markdown.ToHtml(markdownText, pipeline);
         }
+
     }
 }
