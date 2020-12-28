@@ -40,6 +40,7 @@ namespace SimpleBlog
             services.AddScoped<IArticlesService, ArticlesService>();
 
             services.AddSingleton<IArticleInfoRepository, DiskArticleInfoRepository>();
+            services.AddSingleton<ITagsRepository, DiskTagsRepository>();
 
             services.AddSingleton<IPagesRepository, DiskPagesRepository>();
             services.AddScoped<IPagesService, PagesService>();

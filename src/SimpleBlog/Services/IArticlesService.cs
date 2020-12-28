@@ -20,6 +20,8 @@ namespace SimpleBlog.Services
         Task DeteleAsync(string id);
         Task ReleaseAsync(string id);
 
+        Task<List<string>> GetAllTagsAsync();
+
         Task<List<ArticleInfo>> GetAllArticleInfosAsync();
         Task IncrementViewsCounterAsync(string id);
     }

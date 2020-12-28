@@ -4,29 +4,43 @@
     ViewData["Title"] = "Blog";
 }
 
-<div class="page-title">
-    <div class="container">
-        <h1 class="display-4">Blog</h1>
+<section class="mb-4">
+    <div class="page-title">
+        <div class="container">
+            <h1 class="display-4">Blog</h1>
+        </div>
     </div>
-</div>
+    <div class="page-title-bottom py-1">
+        <div class="container">
+            <a asp-page="/blogtags">Search by category</a>
+        </div>
+    </div>
+</section>
 
 <main class="page-body">
+    @{ var isFirst = true; } 
     @foreach (var article in Model.Articles)
     {
-        <article class="container mb-4 px-0 card">
-            <section class="card-body">
-                <h2><a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Title</a></h2>
-                <p>@article.Created.ToString("MMMM dd, yyyy")</p>
-            </section>
-            <section class="card-footer py-1">
-                <ul class="list-inline mb-0">
-                    @foreach (var tag in article.Tags)
-                    {
-                        <li class="list-inline-item"><a asp-page="/blogtag" asp-route-tag="@tag">@tag</a></li>
-                    }
-                </ul>
-            </section>
+        <article class="container mb-4">
+            @if (!isFirst)
+            {
+                <hr />
+            }
+            <h3><a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Title</a></h3>
+            <p>@article.Created.ToString("MMMM dd, yyyy")</p>
+            <ul class="list-inline mb-0">
+                <li class="list-inline-item">Comments: 0</li>
+                <li class="list-inline-item">|</li>
+                @foreach (var tag in article.Tags)
+                {
+                    <li class="list-inline-item"><a asp-page="/blogtag" asp-route-tag="@tag">@tag</a></li>
+                }
+            </ul>
         </article>
+        @if (isFirst)
+        {
+            isFirst = false;
+        }
     }
 </main>
 

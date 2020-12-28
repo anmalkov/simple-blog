@@ -116,7 +116,7 @@ namespace SimpleBlog.Pages
                 Id = ArticleId,
                 Title = Title,
                 Body = Body,
-                Tags = new List<string>(Tags.Split(',')),
+                Tags = new List<string>(Tags.Split(',').Select(t => t.Trim())),
                 Published = Published
             };
         }

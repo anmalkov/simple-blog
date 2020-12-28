@@ -1,16 +1,16 @@
-﻿@page "/blog/tag/{tag}"
+﻿@page "/blog/category/{tag}"
 @model SimpleBlog.Pages.BlogTagModel
 @{
-    ViewData["Title"] = "Blog";
+    ViewData["Title"] = $"Posts about {Model.Tag}";
 }
 
-<div class="page-title">
+<div class="page-title mb-3">
     <div class="container">
-        <h1 class="display-4">Tag: @Model.Tag</h1>
+        <h1 class="display-4">Category: @Model.Tag</h1>
     </div>
 </div>
 <div class="container page-body">
-    <h4>@Model.Tag has @Model.Articles.Count articles</h4>
+    <h4>@Model.Tag has @Model.Articles.Count posts</h4>
     <ul class="list-unstyled mt-3">
         @foreach (var article in Model.Articles)
         {

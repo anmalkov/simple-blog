@@ -18,7 +18,7 @@
             <h1 class="display-4">@Model.Title</h1>
         </div>
     </section>
-    <section class="page-title-bottom py-1">
+    <section class="page-title-bottom py-1 mb-3">
         <div class="container">
             <div class="row">
                 <div class="col">
@@ -28,7 +28,7 @@
                     @if (Model.Tags != null && Model.Tags.Count > 0)
                     {
                         <ul class="list-inline mb-0">
-                            <li class="list-inline-item">Tags</li>
+                            <li class="list-inline-item">Categories</li>
                             @foreach (var tag in Model.Tags)
                             {
                                 <li class="list-inline-item"><a asp-page="/blogtag" asp-route-tag="@tag">@tag</a></li>
