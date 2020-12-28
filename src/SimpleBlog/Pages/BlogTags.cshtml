@@ -1,0 +1,35 @@
+﻿@page "/blog/categories"
+@model SimpleBlog.Pages.BlogTagsModel
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="page-title mb-3">
+    <div class="container">
+        <h1 class="display-4">Categories</h1>
+    </div>
+</div>
+<div class="container page-body">
+    <ul class="list-inline">
+        @foreach (var tag in Model.Tags)
+        {
+            <li class="list-inline-item"><a asp-page="/blogtag" asp-route-tag="@tag.Key">@tag.Key</a> [@tag.Value.Count]</li>
+        }
+    </ul>
+    <hr />
+</div>
+<div class="container page-body">
+    @foreach (var tag in Model.Tags)
+    {
+        <div>
+            <h4>@tag.Key has @tag.Value.Count posts</h4>
+            <ul class="list-unstyled mt-3">
+                @foreach (var article in tag.Value)
+                {
+                    <li>@article.Created.ToString("MMMM dd, yyyy") <a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Title</a></li>
+                }
+            </ul>
+            <hr />
+        </div>
+    }
+</div>

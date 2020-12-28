@@ -14,24 +14,31 @@ namespace SimpleBlog.Services
         private readonly ILogger<ArticlesService> _logger;
         private readonly IArticlesRepository _articlesRepository;
         private readonly IArticleInfoRepository _articleInfoRepository;
+        private readonly ITagsRepository _tagsRepository;
 
-        public ArticlesService(ILogger<ArticlesService> logger, IArticlesRepository articlesRepository, IArticleInfoRepository articleInfoRepository)
+        public ArticlesService(ILogger<ArticlesService> logger, IArticlesRepository articlesRepository, IArticleInfoRepository articleInfoRepository, ITagsRepository tagsRepository)
         {
             _logger = logger;
             _articlesRepository = articlesRepository;
             _articleInfoRepository = articleInfoRepository;
+            _tagsRepository = tagsRepository;
         }
 
         public async Task CreateAsync(Article article)
         {
             article.Created = DateTime.Now;
             article.HtmlBody = GetHtmlFromMarkdown(article.Body);
+            article.Tags = article.Tags.Select(t => t.Trim()).ToList();
+
             await _articlesRepository.CreateAsync(article);
+            await CreateTagsAsync(article.Tags);
         }
 
         public async Task DeteleAsync(string id)
         {
+            var article = await GetAsync(id);
             await _articlesRepository.DeleteAsync(id);
+            await DeleteTagsAsync(article.Tags);
         }
 
         public async Task<List<Article>> GetAllAsync()
@@ -88,11 +95,44 @@ namespace SimpleBlog.Services
                 return;
             }
 
+            article.Tags = article.Tags.Select(t => t.Trim()).ToList();
+
+            var tagsToDelete = oldArticle.Tags.Except(article.Tags).ToList();
+            var tagsToCreate = article.Tags.Except(oldArticle.Tags).ToList();
+
             article.Created = oldArticle.Created;
             article.Updated = DateTime.Now;
             article.HtmlBody = GetHtmlFromMarkdown(article.Body);
 
             await _articlesRepository.UpdateAsync(article);
+
+            await CreateTagsAsync(tagsToCreate);
+            await DeleteTagsAsync(tagsToDelete);
+        }
+
+
+        public async Task<List<string>> GetAllTagsAsync()
+        {
+            return await _tagsRepository.GetAllAsync();
+        }
+
+        private async Task CreateTagsAsync(List<string> tags)
+        {
+            foreach (var tag in tags)
+            {
+                await _tagsRepository.CreateAsync(tag.Trim());
+            }
+        }
+
+        private async Task DeleteTagsAsync(List<string> tags)
+        {
+            foreach (var tag in tags)
+            {
+                if (await _articlesRepository.GetArticlesCountForTagAsync(tag.Trim()) == 0)
+                {
+                    await _tagsRepository.DeleteAsync(tag.Trim());
+                }
+            }
         }
 
 
@@ -107,7 +147,7 @@ namespace SimpleBlog.Services
         }
 
 
-        private string GetHtmlFromMarkdown(string markdownText)
+        private static string GetHtmlFromMarkdown(string markdownText)
         {
             var pipeline = new MarkdownPipelineBuilder()
                 .UsePipeTables()
@@ -118,6 +158,5 @@ namespace SimpleBlog.Services
 
             return Markdown.ToHtml(markdownText, pipeline);
         }
-
     }
 }

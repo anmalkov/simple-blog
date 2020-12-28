@@ -16,8 +16,6 @@ namespace SimpleBlog.Pages
     {
         private readonly IArticlesService _articlesService;
 
-        private Dictionary<string, ArticleInfo> _articleInfos;
-
         public List<ArticleViewModel> Articles { get; set; }
 
         public AdminModel(IArticlesService articlesService)
@@ -37,7 +35,7 @@ namespace SimpleBlog.Pages
             return RedirectToPage("/admin");
         }
 
-        private ArticleViewModel MapToViewModel(Article article, ArticleInfo articleInfo)
+        private static ArticleViewModel MapToViewModel(Article article, ArticleInfo articleInfo)
         {
             return new ArticleViewModel
             {

@@ -39,11 +39,10 @@ namespace SimpleBlog.Repositories
             {
                 Directory.CreateDirectory(articleDirectory);
             }
+
             var fileName = Path.Combine(articleDirectory, formFile.FileName);
-            using (var fileStream = new FileStream(fileName, FileMode.Create))
-            {
-                await formFile.CopyToAsync(fileStream);
-            }
+            using var fileStream = new FileStream(fileName, FileMode.Create);
+            await formFile.CopyToAsync(fileStream);
         }
         public Task DeleteAsync(string articleId, string fileName)
         {

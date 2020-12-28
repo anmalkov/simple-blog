@@ -34,7 +34,7 @@ namespace SimpleBlog.Pages
         }
 
 
-        public async Task OnGetAsync(string id)
+        public async Task OnGetAsync()
         {
             var page = await _pagesService.GetIndexAsync();
             if (page == null)

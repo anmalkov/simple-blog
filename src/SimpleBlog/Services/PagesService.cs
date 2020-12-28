@@ -58,7 +58,7 @@ namespace SimpleBlog.Services
             await _pagesRepository.UpdateAsync(page);
         }
 
-        private string GetHtmlFromMarkdown(string markdownText)
+        private static string GetHtmlFromMarkdown(string markdownText)
         {
             var pipeline = new MarkdownPipelineBuilder()
                 .UsePipeTables()

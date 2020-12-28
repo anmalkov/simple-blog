@@ -21,7 +21,7 @@ namespace SimpleBlog.Pages
             _articlesService = articlesService;
         }
         
-        public async Task OnGet(string tag)
+        public async Task OnGetAsync(string tag)
         {
             Tag = tag;
             Articles = await _articlesService.GetAllAsync(tag);

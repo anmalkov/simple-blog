@@ -35,6 +35,12 @@ namespace SimpleBlog.Repositories
             return _articles.Where(a => a.Value.Tags.Contains(tag)).Select(a => a.Value).OrderByDescending(a => a.Created).ToList();
         }
 
+        public async Task<int> GetArticlesCountForTagAsync(string tag)
+        {
+            await LoadAsync();
+            return _articles.Where(a => a.Value.Tags.Contains(tag)).Count();
+        }
+
         public async Task<List<Article>> GetAllAsync(int page, int pageSize)
         {
             await LoadAsync();
@@ -135,5 +141,6 @@ namespace SimpleBlog.Repositories
             await LoadAsync();
             return _articles.ContainsKey(id);
         }
+
     }
 }
