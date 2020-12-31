@@ -31,6 +31,7 @@ namespace SimpleBlog.Repositories
                 Title = _siteConfiguration.Title,
                 Owner = _siteConfiguration.Owner,
                 BlogPostsPageSize = _siteConfiguration.BlogPostsPageSize,
+                EnableClientSideTelemetry = _siteConfiguration.EnableClientSideTelemetry,
                 LatestBlogPostsCount = _siteConfiguration.LatestBlogPostsCount
             };
         }
@@ -42,6 +43,7 @@ namespace SimpleBlog.Repositories
             _siteConfiguration.Title = config.Title;
             _siteConfiguration.Owner = config.Owner;
             _siteConfiguration.BlogPostsPageSize = config.BlogPostsPageSize;
+            _siteConfiguration.EnableClientSideTelemetry = config.EnableClientSideTelemetry;
             _siteConfiguration.LatestBlogPostsCount = config.LatestBlogPostsCount;
 
             await SaveAsync();
@@ -68,6 +70,7 @@ namespace SimpleBlog.Repositories
                     Owner = "Simple Blog",
                     BlogPostsPageSize = 20,
                     LatestBlogPostsCount = 7,
+                    EnableClientSideTelemetry = false,
                     MenuItems = new ConcurrentDictionary<string, MenuItem>()
                 };
                 _siteConfiguration.MenuItems.TryAdd("blog", new MenuItem { Order = 10, Title = "blog", Url = "/blog" });
@@ -107,7 +110,7 @@ namespace SimpleBlog.Repositories
         {
             await LoadAsync();
 
-            if (!_siteConfiguration.MenuItems.ContainsKey(oldTitle) || _siteConfiguration.MenuItems.ContainsKey(menuItem.Title))
+            if (!_siteConfiguration.MenuItems.ContainsKey(oldTitle) || (_siteConfiguration.MenuItems.ContainsKey(oldTitle) && _siteConfiguration.MenuItems.ContainsKey(menuItem.Title)))
             {
                 return;
             }

@@ -1,3 +1,4 @@
+using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using SimpleBlog.Extensions;
 using SimpleBlog.Repositories;
 using SimpleBlog.Services;
+using System;
 using System.IO;
 using System.Reflection;
 
@@ -25,6 +27,17 @@ namespace SimpleBlog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY");
+            if (!string.IsNullOrEmpty(instrumentationKey))
+            {
+                var options = new ApplicationInsightsServiceOptions
+                {
+                    EnableAdaptiveSampling = false,
+                    EnablePerformanceCounterCollectionModule = false
+                };
+                services.AddApplicationInsightsTelemetry(options);
+            }
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {

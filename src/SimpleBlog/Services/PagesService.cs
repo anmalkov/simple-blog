@@ -24,7 +24,7 @@ namespace SimpleBlog.Services
 
         public async Task<List<Page>> GetAllAsync()
         {
-            return (await _pagesRepository.GetAllAsync()).Where(p => p.Id != IndexPageId).ToList();
+            return await _pagesRepository.GetAllAsync();
         }
 
         public async Task CreateAsync(Page page)
