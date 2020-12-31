@@ -1,11 +1,19 @@
 ﻿@using SimpleBlog.Repositories
+@using Microsoft.ApplicationInsights.AspNetCore
 
 @inject ISiteConfigurationRepository configRepository
-@{ 
+@inject IServiceProvider serviceProvider
+
+@{
     var config = await configRepository.GetAsync();
     var menuItems = await configRepository.GetAllMenuItemsAsync();
     var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
     var simpleBlogVersion = $"{version.Major}.{version.Minor}.{version.Build}";
+    JavaScriptSnippet JavaScriptSnippet = null;
+    if (config.EnableClientSideTelemetry)
+    {
+        JavaScriptSnippet = (JavaScriptSnippet)serviceProvider.GetService(typeof(JavaScriptSnippet));
+    }
 }
 
 <!DOCTYPE html>
@@ -17,6 +25,10 @@
     <link rel="stylesheet" href="~/libs/bootstrap/css/bootstrap.min.css" />
     @RenderSection("Styles", required: false)
     <link rel="stylesheet" href="~/css/site.css" />
+    @if (JavaScriptSnippet != null && config.EnableClientSideTelemetry)
+    {
+        @Html.Raw(JavaScriptSnippet.FullScript)
+    }
 </head>
 <body>
     <header>

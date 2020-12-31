@@ -36,6 +36,12 @@ namespace SimpleBlog.Pages
         [Display(Name = "How many latest and popular posts on index page")]
         public int LatestBlogPostsCount { get; set; }
 
+        [BindProperty]
+        [Required]
+        [Display(Name = "Enable client-side telemetry")]
+        public bool EnableClientSideTelemetry { get; set; }
+        public bool InstrumentationKeyProvided => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY"));
+
         public List<MenuItem> MenuItems { get; set; }
 
         public AdminConfigModel(ISiteConfigurationRepository configRepository)
@@ -78,7 +84,8 @@ namespace SimpleBlog.Pages
                 Title = Title,
                 Owner = Owner,
                 BlogPostsPageSize = BlogPostsPageSize,
-                LatestBlogPostsCount = LatestBlogPostsCount
+                LatestBlogPostsCount = LatestBlogPostsCount,
+                EnableClientSideTelemetry = EnableClientSideTelemetry
             };
         }
 
@@ -88,6 +95,7 @@ namespace SimpleBlog.Pages
             Owner = config.Owner;
             BlogPostsPageSize = config.BlogPostsPageSize;
             LatestBlogPostsCount = config.LatestBlogPostsCount;
+            EnableClientSideTelemetry = config.EnableClientSideTelemetry;
         }
     }
 }
