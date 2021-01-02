@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SimpleBlog.Model;
@@ -15,6 +16,7 @@ namespace SimpleBlog.Pages
     public class AdminConfigModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly ISiteConfigurationRepository _configRepository;
+        private readonly IImagesRepository _imagesRepository;
 
         [BindProperty]
         [Required]
@@ -44,9 +46,16 @@ namespace SimpleBlog.Pages
 
         public List<MenuItem> MenuItems { get; set; }
 
-        public AdminConfigModel(ISiteConfigurationRepository configRepository)
+        public bool FaviconExists { get;  private set; }
+
+        [BindProperty]
+        public List<IFormFile> UploadFavicons { get; set; }
+
+
+        public AdminConfigModel(ISiteConfigurationRepository configRepository, IImagesRepository imagesRepository)
         {
             _configRepository = configRepository;
+            _imagesRepository = imagesRepository;
         }
 
         public async Task OnGet()
@@ -55,6 +64,8 @@ namespace SimpleBlog.Pages
             MapFromSiteConfiguration(config);
 
             MenuItems = await _configRepository.GetAllMenuItemsAsync();
+
+            FaviconExists = await _imagesRepository.FaviconExists();
         }
 
         public async Task<IActionResult> OnPostDeleteMenuItemAsync(string title)
@@ -75,6 +86,15 @@ namespace SimpleBlog.Pages
             await _configRepository.UpdateAsync(config);
 
             return RedirectToPage("/adminconfig");
+        }
+
+        public async Task<IActionResult> OnPostFaviconAsync(string id)
+        {
+            foreach (var image in UploadFavicons)
+            {
+                await _imagesRepository.UploadFaviconAsync(image);
+            }
+            return RedirectToPage("/adminconfig", new { id });
         }
 
         private SiteConfiguration MapToSiteConfiguration()
