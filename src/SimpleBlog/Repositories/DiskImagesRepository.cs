@@ -11,10 +11,12 @@ namespace SimpleBlog.Repositories
 {
     public class DiskImagesRepository : IImagesRepository
     {
+        private const string FaviconDirectoryName = "favicon";
+
         private readonly ILogger<DiskImagesRepository> _logger;
 
         private readonly string _directoryName;
-
+        
         public DiskImagesRepository(ILogger<DiskImagesRepository> logger)
         {
             _logger = logger;
@@ -49,6 +51,18 @@ namespace SimpleBlog.Repositories
             var articleDirectory = Path.Combine(_directoryName, articleId);
             File.Delete(Path.Combine(articleDirectory, fileName));
             return Task.CompletedTask;
+        }
+
+
+        public async Task UploadFaviconAsync(IFormFile formFile)
+        {
+            await UploadAsync(FaviconDirectoryName, formFile);
+        }
+
+        public Task<bool> FaviconExists()
+        {
+            var faviconDirectory = Path.Combine(_directoryName, FaviconDirectoryName);
+            return Task.FromResult(Directory.Exists(faviconDirectory));
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿@using SimpleBlog.Repositories
 
 @inject ISiteConfigurationRepository configRepository
+@inject IImagesRepository imageRepository
+
 @{
     var config = await configRepository.GetAsync();
     var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
@@ -15,6 +17,13 @@
     <title>@config.Title - @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/libs/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    @if (imageRepository.FaviconExists().Result)
+    {
+        <link rel="apple-touch-icon" sizes="180x180" href="/blogimages/favicon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/blogimages/favicon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/blogimages/favicon/favicon-16x16.png">
+        <link rel="manifest" href="/blogimages/favicon/site.webmanifest">
+    }
 </head>
 <body>
     <header>
