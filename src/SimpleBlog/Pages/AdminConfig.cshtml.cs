@@ -15,6 +15,8 @@ namespace SimpleBlog.Pages
     [Authorize]
     public class AdminConfigModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
+        private const string AppInsightsConnectionStringEnvironmentVariableName = "APPLICATIONINSIGHTS_CONNECTION_STRING";
+
         private readonly ISiteConfigurationRepository _configRepository;
         private readonly IImagesRepository _imagesRepository;
 
@@ -42,7 +44,7 @@ namespace SimpleBlog.Pages
         [Required]
         [Display(Name = "Enable client-side telemetry")]
         public bool EnableClientSideTelemetry { get; set; }
-        public bool InstrumentationKeyProvided => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY"));
+        public bool InstrumentationKeyProvided => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(AppInsightsConnectionStringEnvironmentVariableName));
 
         public List<MenuItem> MenuItems { get; set; }
 

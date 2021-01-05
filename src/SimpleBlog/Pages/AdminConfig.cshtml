@@ -43,7 +43,7 @@
             {
                 @Html.CheckBoxFor(m => m.EnableClientSideTelemetry, new { @class = "form-check-input", disabled = "disabled" })
                 @Html.LabelFor(m => m.EnableClientSideTelemetry, new { @class = "form-check-label" })
-                <div id="EnableClientSideTelemetryHelp" class="form-text">To activate the client-side telemetry please provide the instrumentation key in APPINSIGHTS_INSTRUMENTATIONKEY environment variable</div>
+                <div id="EnableClientSideTelemetryHelp" class="form-text">To activate the client-side telemetry please provide the connection string in APPLICATIONINSIGHTS_CONNECTION_STRING environment variable</div>
             }
         </div>
         <button type="submit" class="btn btn-primary">Save</button>

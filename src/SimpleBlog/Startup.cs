@@ -17,6 +17,8 @@ namespace SimpleBlog
 {
     public class Startup
     {
+        private const string AppInsightsConnectionStringEnvironmentVariableName = "APPLICATIONINSIGHTS_CONNECTION_STRING";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,8 +29,8 @@ namespace SimpleBlog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY");
-            if (!string.IsNullOrEmpty(instrumentationKey))
+            var appInsightsConnectionString = Environment.GetEnvironmentVariable(AppInsightsConnectionStringEnvironmentVariableName);
+            if (!string.IsNullOrEmpty(appInsightsConnectionString))
             {
                 var options = new ApplicationInsightsServiceOptions
                 {
