@@ -65,6 +65,7 @@ namespace SimpleBlog.Services
                 .UseEmphasisExtras()
                 .UseTaskLists()
                 .UseBootstrap()
+                .UseMediaLinks()
                 .Build();
 
             return Markdown.ToHtml(markdownText, pipeline);
