@@ -41,16 +41,17 @@ namespace SimpleBlog.Repositories
             return _articles.Where(a => a.Value.Tags.Contains(tag)).Count();
         }
 
-        public async Task<List<Article>> GetAllAsync(int page, int pageSize)
+        public async Task<List<Article>> GetAllAsync(int page, int pageSize, bool onlyPublished = true)
         {
             await LoadAsync();
-            return _articles.Select(a => a.Value).OrderByDescending(a => a.Created).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            return _articles.Select(a => a.Value).Where(a => !onlyPublished || (onlyPublished && a.Published)).OrderByDescending(a => a.Created).Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
-        public async Task<int> GetTotalNumberOfPagesAsync(int pageSize)
+        public async Task<int> GetTotalNumberOfPagesAsync(int pageSize, bool onlyPublished = true)
         {
             await LoadAsync();
-            return _articles.Count() / pageSize + ((_articles.Count() % pageSize != 0) ? 1 : 0);
+            var count = _articles.Where(a => !onlyPublished || (onlyPublished && a.Value.Published)).Count();
+            return count / pageSize + ((count % pageSize != 0) ? 1 : 0);
         }
 
         public async Task<Article> GetAsync(string id)

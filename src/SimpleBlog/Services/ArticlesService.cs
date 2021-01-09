@@ -67,7 +67,11 @@ namespace SimpleBlog.Services
             var articles = new List<Article>();
             foreach (var articleInfo in articleInfos)
             {
-                articles.Add(await _articlesRepository.GetAsync(articleInfo.ArticleId));
+                var article = await _articlesRepository.GetAsync(articleInfo.ArticleId);
+                if (article.Published)
+                {
+                    articles.Add(article);
+                }
             }
             return articles;
         }

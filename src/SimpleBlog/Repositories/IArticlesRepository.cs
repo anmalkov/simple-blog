@@ -11,8 +11,8 @@ namespace SimpleBlog.Repositories
         Task<List<Article>> GetAllAsync();
         Task<List<Article>> GetAllAsync(string tag);
         Task<int> GetArticlesCountForTagAsync(string tag);
-        Task<List<Article>> GetAllAsync(int page, int pageSize);
-        Task<int> GetTotalNumberOfPagesAsync(int pageSize);
+        Task<List<Article>> GetAllAsync(int page, int pageSize, bool onlyPublished = true);
+        Task<int> GetTotalNumberOfPagesAsync(int pageSize, bool onlyPublished = true);
         Task<Article> GetAsync(string id);
         Task<bool> ExistsAsync(string id);
         Task CreateAsync(Article article);
