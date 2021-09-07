@@ -22,7 +22,7 @@ You can easily add it to your website and you will have a simple but powerful an
 - Super fast performance
 - Simple code
 - No DB is needed
-- Easy to customize UI
+- Easy to customize UI (in development)
 
 ## Open source components
 - [markdig](https://github.com/lunet-io/markdig)
