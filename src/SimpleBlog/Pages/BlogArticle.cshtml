@@ -1,6 +1,7 @@
 ﻿@page "/blog/{id}"
 @model SimpleBlog.Pages.ArticleModel
 @{
+    ViewData["Title"] = Model.Title;
 }
 
 @section Styles {

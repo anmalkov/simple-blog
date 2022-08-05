@@ -5,7 +5,7 @@ DOCKERHUB_TOKEN=$3
 echo "building version $version"
 
 echo 'create build container'
-buildcon=$(buildah from mcr.microsoft.com/dotnet/sdk:5.0-buster-slim)
+buildcon=$(buildah from mcr.microsoft.com/dotnet/sdk:6.0)
 echo 'set workdir'
 buildah config --workingdir /src $buildcon
 echo 'copy proj'
@@ -23,7 +23,7 @@ buildconmount=$(buildah mount $buildcon)
 echo $buildconmount
 
 echo 'create final container'
-finalcon=$(buildah from mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim)
+finalcon=$(buildah from mcr.microsoft.com/dotnet/aspnet:6.0)
 echo 'set workdir'
 buildah config --workingdir /app $finalcon
 echo 'set port'
