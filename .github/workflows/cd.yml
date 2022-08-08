@@ -16,11 +16,17 @@ jobs:
         run: dotnet restore ./src/**/*.csproj
       - name: dotnet build
         run: dotnet build --configuration Release --no-restore ./src/**/*.csproj
+      - name: extract version
+        run: |
+          version=$(sed -ne '/Version/{s/.*<Version>\(.*\)<\/Version>.*/\1/p;q;}' ./src/SimpleBlog/SimpleBlog.csproj)
+          echo "Extrected version: ${version}"
+          echo "SIMPLEBLOG_VERSION=${version}" >> $GITHUB_ENV
       - name: create an image and push
         run: |
+          echo "Image version: ${{env.SIMPLEBLOG_VERSION}}"
           cd ./src/SimpleBlog/
           chmod +x ./buildah-build.sh
-          sudo ./buildah-build.sh "1.1.$GITHUB_RUN_NUMBER" ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_TOKEN }}
+          sudo ./buildah-build.sh "${{env.SIMPLEBLOG_VERSION}}" ${{ secrets.DOCKERHUB_USERNAME }} ${{ secrets.DOCKERHUB_TOKEN }}
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
