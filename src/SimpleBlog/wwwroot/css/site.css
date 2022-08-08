@@ -3,6 +3,7 @@
     padding: 5em 0;
     background-color: #A9A9A9;
 }
+ 
 
 .page-title-small {
     padding: 0.5em 0;
@@ -32,6 +33,45 @@
 
 code {
     border: 1px dashed #dddddd;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #2D2D2D;
+        color: #B0B0B0;
+    }
+
+    .page-title {
+        background-color: #393939;
+        color: white;
+    }
+
+    .page-title-small {
+        background-color: #393939;
+        color: white;
+    }
+
+    .alert-secondary {
+        background-color: #353535;
+        color: #DDDDDD;
+        border-color: #353535;
+    }
+
+    nav.bg-light {
+        background-color: #2D2D2D!important;
+    }
+
+    a.nav-link, a.navbar-brand {
+        color: white!important;
+    }
+
+    footer.border-top {
+        border-color: #666666!important;
+    }
+
+    a {
+        color: #4ea6fa;
+    }
 }
 
 /* Small devices (landscape phones, 576px and up) */ 
