@@ -66,9 +66,19 @@
             }
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Title)
-            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+			@if (string.IsNullOrEmpty(Model.ArticleId))
+            {
+                @Html.LabelFor(m => m.Title)
+				<div class="row">
+                    <div class="col-11">@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })</div>
+                    <div class="col mt-2"><a href="javascript:titleToUrl('Title','ArticleId')">To URL</a></div>
+				</div>
+                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+            } else {
+                @Html.LabelFor(m => m.Title)
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+			}
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Body)
