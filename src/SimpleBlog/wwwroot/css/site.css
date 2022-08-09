@@ -41,6 +41,10 @@ code {
         color: #B0B0B0;
     }
 
+    hr {
+        border-color: #494949;
+    }
+
     .page-title {
         background-color: #393939;
         color: white;
@@ -49,6 +53,10 @@ code {
     .page-title-small {
         background-color: #393939;
         color: white;
+    }
+
+    .page-title-bottom {
+        background-color: #333333;
     }
 
     .alert-secondary {
@@ -71,6 +79,11 @@ code {
 
     a {
         color: #4ea6fa;
+    }
+
+    code {
+        background-color: #2D2D2D;
+        border: 1px dashed #494949;
     }
 }
 
