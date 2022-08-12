@@ -97,9 +97,13 @@ code {
         color: white;
     }
 
-    .thead-light th {
+    th {
         background-color: #393939!important;
         color: white!important;
+    }
+
+    td {
+        color: #B0B0B0;
     }
 }
 
