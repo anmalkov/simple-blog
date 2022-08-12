@@ -38,7 +38,7 @@ code {
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #2D2D2D;
-        color: #B0B0B0;
+        color: #DDDDDD;
     }
 
     hr {
@@ -88,7 +88,7 @@ code {
     .form-control {
         background-color: #393939;
         border-color: #666666;
-        color: #B0B0B0;
+        color: #DDDDDD;
     }
     
     .form-control:focus {
@@ -103,7 +103,7 @@ code {
     }
 
     td {
-        color: #B0B0B0;
+        color: #DDDDDD;
     }
 }
 
