@@ -64,6 +64,7 @@ namespace SimpleBlog.Services
         public async Task<List<Article>> GetMostPopularAsync(int articlesCount)
         {
             var articleInfos = await _articleInfoRepository.GetAllOrderedByViewsCountAsync(articlesCount);
+
             var articles = new List<Article>();
             foreach (var articleInfo in articleInfos)
             {
@@ -73,6 +74,34 @@ namespace SimpleBlog.Services
                     articles.Add(article);
                 }
             }
+            return articles;
+        }
+
+        public async Task<List<Article>> GetRecommendedByTagsAsync(List<string> tags, int articlesCount)
+        {
+            var articlesRank = new Dictionary<string, ArticleRank>();
+            foreach (var tag in tags)
+            {
+                var articlesByTag = await GetAllAsync(tag);
+                foreach (var article in articlesByTag.Where(a => a.Published).ToList())
+                {
+                    if (articlesRank.ContainsKey(article.Id))
+                    {
+                        articlesRank[article.Id].TagsRank++;
+                    }
+                    else
+                    {
+                        articlesRank.Add(article.Id, new ArticleRank { TagsRank = 1, Created = article.Created });
+                    }
+                }
+            }
+
+            var articles = new List<Article>();
+            foreach (var id in articlesRank.OrderByDescending(d => d.Value.TagsRank).ThenByDescending(d => d.Value.Created).Select(d => d.Key).Take(articlesCount).ToList())
+            {
+                articles.Add(await _articlesRepository.GetAsync(id));
+            }
+            
             return articles;
         }
 
@@ -163,5 +192,7 @@ namespace SimpleBlog.Services
 
             return Markdown.ToHtml(markdownText, pipeline);
         }
+
+       
     }
 }

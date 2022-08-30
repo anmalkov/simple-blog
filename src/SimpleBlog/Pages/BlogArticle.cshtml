@@ -46,5 +46,18 @@
             <p><a class="btn btn-primary" role="button" asp-page="/adminarticle" asp-route-id="@Model.Id">Edit this article</a></p>
         }
         @Html.Raw(Model.HtmlBody)
+        @if (Model.ShowRecommendedArticles)
+        {
+            <h3>Recommended content</h3>
+            <ul class="list-unstyled">
+                @foreach (var article in Model.RecommendedArticles)
+                {
+                    <li>
+                        <a asp-page="/blogarticle" asp-route-id="@article.Id">@article.Title</a>
+                        <p>@article.Created.ToString("MMMM dd, yyyy")</p>
+                    </li>
+                }
+            </ul>
+        }
     </section>
 </main>

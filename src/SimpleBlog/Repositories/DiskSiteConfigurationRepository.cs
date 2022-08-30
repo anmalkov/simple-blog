@@ -44,6 +44,7 @@ namespace SimpleBlog.Repositories
             _siteConfiguration.Owner = config.Owner;
             _siteConfiguration.BlogPostsPageSize = config.BlogPostsPageSize;
             _siteConfiguration.EnableClientSideTelemetry = config.EnableClientSideTelemetry;
+            _siteConfiguration.RecommendedArticlesCount = config.RecommendedArticlesCount;
             _siteConfiguration.LatestBlogPostsCount = config.LatestBlogPostsCount;
 
             await SaveAsync();
@@ -71,6 +72,7 @@ namespace SimpleBlog.Repositories
                     BlogPostsPageSize = 20,
                     LatestBlogPostsCount = 7,
                     EnableClientSideTelemetry = false,
+                    RecommendedArticlesCount = 5,
                     MenuItems = new ConcurrentDictionary<string, MenuItem>()
                 };
                 _siteConfiguration.MenuItems.TryAdd("blog", new MenuItem { Order = 10, Title = "blog", Url = "/blog" });

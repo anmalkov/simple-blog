@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SimpleBlog.Model;
+using SimpleBlog.Repositories;
 using SimpleBlog.Services;
 
 namespace SimpleBlog.Pages
@@ -12,6 +14,7 @@ namespace SimpleBlog.Pages
     public class ArticleModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
     {
         private readonly IArticlesService _articlesService;
+        private readonly ISiteConfigurationRepository _configRepository;
 
         public string Id { get; private set; }
         public string Title { get; private set; }
@@ -19,10 +22,13 @@ namespace SimpleBlog.Pages
         [DisplayFormat(DataFormatString = "{0:MMMM dd, yyyy}")]
         public DateTime Created { get; private set; }
         public List<string> Tags { get; private set; }
+        public bool ShowRecommendedArticles { get; private set; }
+        public List<Article> RecommendedArticles { get; set; }
 
-        public ArticleModel(IArticlesService articlesService)
+        public ArticleModel(IArticlesService articlesService, ISiteConfigurationRepository configRepository)
         {
             _articlesService = articlesService;
+            _configRepository = configRepository;
         }
 
         public async Task OnGetAsync(string id)
@@ -42,6 +48,13 @@ namespace SimpleBlog.Pages
             Tags = new List<string>(article.Tags);
 
             await _articlesService.IncrementViewsCounterAsync(article.Id);
+
+            var config = await _configRepository.GetAsync();
+            ShowRecommendedArticles = config.RecommendedArticlesCount > 0;
+            if (ShowRecommendedArticles)
+            {
+                RecommendedArticles = await _articlesService.GetRecommendedByTagsAsync(article.Tags, config.RecommendedArticlesCount);
+            }
         }
     }
 }

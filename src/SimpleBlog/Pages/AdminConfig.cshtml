@@ -33,6 +33,11 @@
             @Html.TextBoxFor(m => m.LatestBlogPostsCount, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.LatestBlogPostsCount, "", new { @class = "text-danger" })
         </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.RecommendedArticlesCount)
+            @Html.TextBoxFor(m => m.RecommendedArticlesCount, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.RecommendedArticlesCount, "", new { @class = "text-danger" })
+        </div>
         <div class="form-group form-check">
             @if (Model.InstrumentationKeyProvided)
             {

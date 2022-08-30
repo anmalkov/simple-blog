@@ -46,6 +46,16 @@ namespace SimpleBlog.Pages
         public bool EnableClientSideTelemetry { get; set; }
         public bool InstrumentationKeyProvided => !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(AppInsightsConnectionStringEnvironmentVariableName));
 
+        [BindProperty]
+        [Required]
+        [Display(Name = "Show recommended articles for each article")]
+        public bool ShowRecommendedArticles { get; set; }
+
+        [BindProperty]
+        [Required]
+        [Display(Name = "How many recommended articles to show for each article")]
+        public int RecommendedArticlesCount { get; set; }
+
         public List<MenuItem> MenuItems { get; set; }
 
         public bool FaviconExists { get;  private set; }
@@ -107,7 +117,8 @@ namespace SimpleBlog.Pages
                 Owner = Owner,
                 BlogPostsPageSize = BlogPostsPageSize,
                 LatestBlogPostsCount = LatestBlogPostsCount,
-                EnableClientSideTelemetry = EnableClientSideTelemetry
+                EnableClientSideTelemetry = EnableClientSideTelemetry,
+                RecommendedArticlesCount = RecommendedArticlesCount
             };
         }
 
@@ -118,6 +129,7 @@ namespace SimpleBlog.Pages
             BlogPostsPageSize = config.BlogPostsPageSize;
             LatestBlogPostsCount = config.LatestBlogPostsCount;
             EnableClientSideTelemetry = config.EnableClientSideTelemetry;
+            RecommendedArticlesCount = config.RecommendedArticlesCount;
         }
     }
 }
