@@ -32,7 +32,8 @@ namespace SimpleBlog.Repositories
                 Owner = _siteConfiguration.Owner,
                 BlogPostsPageSize = _siteConfiguration.BlogPostsPageSize,
                 EnableClientSideTelemetry = _siteConfiguration.EnableClientSideTelemetry,
-                LatestBlogPostsCount = _siteConfiguration.LatestBlogPostsCount
+                LatestBlogPostsCount = _siteConfiguration.LatestBlogPostsCount,
+                RecommendedArticlesCount = _siteConfiguration.RecommendedArticlesCount
             };
         }
 

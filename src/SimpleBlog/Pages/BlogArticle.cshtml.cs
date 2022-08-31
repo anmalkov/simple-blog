@@ -22,7 +22,6 @@ namespace SimpleBlog.Pages
         [DisplayFormat(DataFormatString = "{0:MMMM dd, yyyy}")]
         public DateTime Created { get; private set; }
         public List<string> Tags { get; private set; }
-        public bool ShowRecommendedArticles { get; private set; }
         public List<Article> RecommendedArticles { get; set; }
 
         public ArticleModel(IArticlesService articlesService, ISiteConfigurationRepository configRepository)
@@ -50,10 +49,9 @@ namespace SimpleBlog.Pages
             await _articlesService.IncrementViewsCounterAsync(article.Id);
 
             var config = await _configRepository.GetAsync();
-            ShowRecommendedArticles = config.RecommendedArticlesCount > 0;
-            if (ShowRecommendedArticles)
+            if (config.RecommendedArticlesCount > 0)
             {
-                RecommendedArticles = await _articlesService.GetRecommendedByTagsAsync(article.Tags, config.RecommendedArticlesCount);
+                RecommendedArticles = await _articlesService.GetRecommendedByTagsAsync(article.Id, article.Tags, config.RecommendedArticlesCount);
             }
         }
     }

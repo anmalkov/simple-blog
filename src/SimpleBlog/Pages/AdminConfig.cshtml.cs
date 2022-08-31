@@ -48,11 +48,6 @@ namespace SimpleBlog.Pages
 
         [BindProperty]
         [Required]
-        [Display(Name = "Show recommended articles for each article")]
-        public bool ShowRecommendedArticles { get; set; }
-
-        [BindProperty]
-        [Required]
         [Display(Name = "How many recommended articles to show for each article")]
         public int RecommendedArticlesCount { get; set; }
 
@@ -90,6 +85,8 @@ namespace SimpleBlog.Pages
         {
             if (!ModelState.IsValid)
             {
+                MenuItems = await _configRepository.GetAllMenuItemsAsync();
+                FaviconExists = await _imagesRepository.FaviconExists();
                 return Page();
             }
 

@@ -77,13 +77,13 @@ namespace SimpleBlog.Services
             return articles;
         }
 
-        public async Task<List<Article>> GetRecommendedByTagsAsync(List<string> tags, int articlesCount)
+        public async Task<List<Article>> GetRecommendedByTagsAsync(string excludeArticleId, List<string> tags, int articlesCount)
         {
             var articlesRank = new Dictionary<string, ArticleRank>();
             foreach (var tag in tags)
             {
                 var articlesByTag = await GetAllAsync(tag);
-                foreach (var article in articlesByTag.Where(a => a.Published).ToList())
+                foreach (var article in articlesByTag.Where(a => a.Published && a.Id != excludeArticleId).ToList())
                 {
                     if (articlesRank.ContainsKey(article.Id))
                     {
