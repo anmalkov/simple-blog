@@ -25,5 +25,11 @@ namespace SimpleBlog.Services
 
         Task<List<ArticleInfo>> GetAllArticleInfosAsync();
         Task IncrementViewsCounterAsync(string id);
+
+        Task<List<Comment>> GetCommentsAsync(string id);
+        Task<List<Comment>> GetUnreadedCommentsAsync();
+        Task CreateCommentAsync(Comment comment);
+        Task DeleteCommentAsync(Guid id);
+        Task MarkCommentAsReadAsync(Guid id);
     }
 }

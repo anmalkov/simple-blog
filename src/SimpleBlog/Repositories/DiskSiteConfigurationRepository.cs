@@ -33,7 +33,8 @@ namespace SimpleBlog.Repositories
                 BlogPostsPageSize = _siteConfiguration.BlogPostsPageSize,
                 EnableClientSideTelemetry = _siteConfiguration.EnableClientSideTelemetry,
                 LatestBlogPostsCount = _siteConfiguration.LatestBlogPostsCount,
-                RecommendedArticlesCount = _siteConfiguration.RecommendedArticlesCount
+                RecommendedArticlesCount = _siteConfiguration.RecommendedArticlesCount,
+                EnableComments = _siteConfiguration.EnableComments
             };
         }
 
@@ -47,6 +48,7 @@ namespace SimpleBlog.Repositories
             _siteConfiguration.EnableClientSideTelemetry = config.EnableClientSideTelemetry;
             _siteConfiguration.RecommendedArticlesCount = config.RecommendedArticlesCount;
             _siteConfiguration.LatestBlogPostsCount = config.LatestBlogPostsCount;
+            _siteConfiguration.EnableComments = config.EnableComments;
 
             await SaveAsync();
         }
@@ -74,6 +76,7 @@ namespace SimpleBlog.Repositories
                     LatestBlogPostsCount = 7,
                     EnableClientSideTelemetry = false,
                     RecommendedArticlesCount = 5,
+                    EnableComments = true,
                     MenuItems = new ConcurrentDictionary<string, MenuItem>()
                 };
                 _siteConfiguration.MenuItems.TryAdd("blog", new MenuItem { Order = 10, Title = "blog", Url = "/blog" });

@@ -46,6 +46,50 @@ namespace SimpleBlog.Repositories
             await SaveAsync();
         }
 
+        public async Task IncrementCommensCounterAsync(string articleId)
+        {
+            await LoadAsync();
+            if (!_articleInfos.ContainsKey(articleId))
+            {
+                _articleInfos.TryAdd(articleId, new ArticleInfo
+                {
+                    ArticleId = articleId,
+                    ViewsCount = 0,
+                    CommentsCount = 1
+                });
+            }
+            else
+            {
+                var articleInfo = _articleInfos[articleId];
+                articleInfo.CommentsCount++;
+            }
+            await SaveAsync();
+        }
+
+        public async Task DecrementCommensCounterAsync(string articleId)
+        {
+            await LoadAsync();
+            if (!_articleInfos.ContainsKey(articleId))
+            {
+                _articleInfos.TryAdd(articleId, new ArticleInfo
+                {
+                    ArticleId = articleId,
+                    ViewsCount = 0,
+                    CommentsCount = 0
+                });
+            }
+            else
+            {
+                var articleInfo = _articleInfos[articleId];
+                if (articleInfo.CommentsCount == 0)
+                {
+                    return;
+                }
+                articleInfo.CommentsCount--;
+            }
+            await SaveAsync();
+        }
+
         public async Task<List<ArticleInfo>> GetAllAsync()
         {
             await LoadAsync();
@@ -66,6 +110,18 @@ namespace SimpleBlog.Repositories
                 return null;
             }
             return _articleInfos[articleId];
+        }
+
+        public async Task DeleteAsync(string articleId)
+        {
+            await LoadAsync();
+            if (!_articleInfos.ContainsKey(articleId))
+            {
+                return;
+            }
+
+            _articleInfos.TryRemove(articleId, out ArticleInfo _);
+            await SaveAsync();
         }
 
         public async Task<int> GetCommentsCountAsync(string articleId)

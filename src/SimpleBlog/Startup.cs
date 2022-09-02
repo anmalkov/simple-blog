@@ -63,6 +63,8 @@ namespace SimpleBlog
             services.AddSingleton<ISiteConfigurationRepository, DiskSiteConfigurationRepository>();
             services.AddSingleton<IImagesRepository, DiskImagesRepository>();
 
+            services.AddSingleton<ICommentsRepository, DiskCommentsRepository>();
+
             services.AddRazorPages();
         }
 

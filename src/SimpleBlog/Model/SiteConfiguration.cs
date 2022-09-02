@@ -14,6 +14,7 @@ namespace SimpleBlog.Model
         public int BlogPostsPageSize { get; set; }
         public bool EnableClientSideTelemetry { get; set; }
         public int RecommendedArticlesCount { get; set; }
+        public bool EnableComments { get; set; }
         public ConcurrentDictionary<string, MenuItem> MenuItems { get; set; }
     }
 }

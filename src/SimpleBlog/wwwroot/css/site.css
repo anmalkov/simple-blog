@@ -35,6 +35,10 @@ code {
     border: 1px dashed #dddddd;
 }
 
+.comment {
+    white-space: pre;
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #2D2D2D;

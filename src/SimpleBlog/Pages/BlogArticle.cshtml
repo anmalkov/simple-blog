@@ -48,7 +48,9 @@
         @Html.Raw(Model.HtmlBody)
         @if (Model.RecommendedArticles?.Count > 0)
         {
-            <h3>Recommended content</h3>
+            <div class="page-title-bottom pl-3 py-1 mb-3">
+                <h4>Recommended content</h4>
+            </div>
             <ul class="list-unstyled">
                 @foreach (var article in Model.RecommendedArticles)
                 {
@@ -60,4 +62,69 @@
             </ul>
         }
     </section>
+    
+    <section class="container pt-3">
+        <div class="page-title-bottom pl-3 py-1 mb-3">
+            <h4>Comments</h4>
+        </div>
+        @if (Model.Comments.Count > 0)
+        {
+            <form method="post">
+                @Html.HiddenFor(m => m.Id)
+                <ul class="list-unstyled">
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <li>
+                            <div class="row">
+                                <div class="col">
+                                    <p><b>@comment.Author</b></p>
+                                </div>
+                                <div class="col text-right">
+                                    <p>@comment.Created.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                            </div>
+                            <p class="comment">@comment.Content</p>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <ul class="list-inline">
+                                    @if (!comment.Readed)
+                                    {
+                                        <li class="list-inline-item"><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="MarkCommentAsRead" asp-route-commentId="@comment.Id">Mark as read</button></li>
+                                    }
+                                    <li class="list-inline-item"><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="DeleteComment" asp-route-commentId="@comment.Id">Delete</button></li>
+                                </ul>
+                            }
+                            <hr />
+                        </li>
+                    }
+                </ul>
+            </form>
+        }
+        @if (Model.EnableComments) {
+            <h5>Leave your comment</h5>
+			<form method="post">
+                @Html.HiddenFor(m => m.Hash)
+                @Html.HiddenFor(m => m.Id)
+                <div class="form-group">
+                    <label for="Answer">@Model.Question</label>
+                    @Html.TextBoxFor(m => m.Answer, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Answer, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Author)
+                    @Html.TextBoxFor(m => m.Author, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Author, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Comment)
+                    @Html.TextAreaFor(m => m.Comment, 5, 0, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Comment, "", new { @class = "text-danger" })
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        } else {
+			<p>Sorry, comments are disabled.</p>
+        }
+    </section>
+
 </main>

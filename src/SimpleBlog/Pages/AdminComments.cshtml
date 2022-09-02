@@ -1,0 +1,56 @@
+﻿@page "/admin/comments"
+@model SimpleBlog.Pages.AdminCommentsModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Admin Comments";
+}
+
+<div class="page-title-small">
+    <div class="container">
+        <h1>Unreaded comments</h1>
+    </div>
+</div>
+
+<div class="container page-body">
+    @if (Model.Comments.Count == 0)
+    {
+      <p>All comments read</p>
+    } else {
+    <form method="post">
+        <table class="table mt-3">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Page</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var comment in Model.Comments)
+                {
+                    <tr>
+                        <td><a asp-page="/blogarticle" asp-route-id="@comment.ArticleId">@comment.ArticleId</a></td>
+                        <td>
+                            <div class="row">
+                                <div class="col">
+                                    <p><b>@comment.Author</b></p>
+                                </div>
+                                <div class="col text-right">
+                                    <p>@comment.Created.ToString("MMMM dd, yyyy")</p>
+                                </div>
+                            </div>
+                            <p class="comment">@comment.Content</p>
+                        </td>
+                        <td>
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="MarkAsRead" asp-route-id="@comment.Id">Mark as read</button></li>
+                                <li class="list-inline-item"><button type="submit" class="btn btn-link button-link-with-links" asp-page-handler="Delete" asp-route-id="@comment.Id">Delete</button></li>
+                            </ul>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+    }
+</div>
+

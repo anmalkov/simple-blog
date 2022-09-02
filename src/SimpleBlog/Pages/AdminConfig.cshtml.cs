@@ -51,6 +51,11 @@ namespace SimpleBlog.Pages
         [Display(Name = "How many recommended articles to show for each article")]
         public int RecommendedArticlesCount { get; set; }
 
+        [BindProperty]
+        [Required]
+        [Display(Name = "Enable comments for articles")]
+        public bool EnableComments{ get; set; }
+
         public List<MenuItem> MenuItems { get; set; }
 
         public bool FaviconExists { get;  private set; }
@@ -115,7 +120,8 @@ namespace SimpleBlog.Pages
                 BlogPostsPageSize = BlogPostsPageSize,
                 LatestBlogPostsCount = LatestBlogPostsCount,
                 EnableClientSideTelemetry = EnableClientSideTelemetry,
-                RecommendedArticlesCount = RecommendedArticlesCount
+                RecommendedArticlesCount = RecommendedArticlesCount,
+                EnableComments = EnableComments
             };
         }
 
@@ -127,6 +133,7 @@ namespace SimpleBlog.Pages
             LatestBlogPostsCount = config.LatestBlogPostsCount;
             EnableClientSideTelemetry = config.EnableClientSideTelemetry;
             RecommendedArticlesCount = config.RecommendedArticlesCount;
+            EnableComments = config.EnableComments;
         }
     }
 }

@@ -15,13 +15,16 @@ namespace SimpleBlog.Services
         private readonly IArticlesRepository _articlesRepository;
         private readonly IArticleInfoRepository _articleInfoRepository;
         private readonly ITagsRepository _tagsRepository;
+        private readonly ICommentsRepository _commentsRepository;
 
-        public ArticlesService(ILogger<ArticlesService> logger, IArticlesRepository articlesRepository, IArticleInfoRepository articleInfoRepository, ITagsRepository tagsRepository)
+        public ArticlesService(ILogger<ArticlesService> logger, IArticlesRepository articlesRepository, IArticleInfoRepository articleInfoRepository, 
+            ITagsRepository tagsRepository, ICommentsRepository commentsRepository)
         {
             _logger = logger;
             _articlesRepository = articlesRepository;
             _articleInfoRepository = articleInfoRepository;
             _tagsRepository = tagsRepository;
+            _commentsRepository = commentsRepository;
         }
 
         public async Task CreateAsync(Article article)
@@ -39,13 +42,15 @@ namespace SimpleBlog.Services
             var article = await GetAsync(id);
             await _articlesRepository.DeleteAsync(id);
             await DeleteTagsAsync(article.Tags);
+            await DeleteCommentsAsync(id);
+            await _articleInfoRepository.DeleteAsync(id);
         }
 
         public async Task<List<Article>> GetAllAsync()
         {
             return await _articlesRepository.GetAllAsync();
         }
-
+        
         public async Task<List<Article>> GetAllAsync(string tag)
         {
             return await _articlesRepository.GetAllAsync(tag);
@@ -193,6 +198,44 @@ namespace SimpleBlog.Services
             return Markdown.ToHtml(markdownText, pipeline);
         }
 
-       
+        
+        public async Task<List<Comment>> GetCommentsAsync(string id)
+        {
+            return await _commentsRepository.GetAllAsync(id);
+        }
+
+        public async Task<List<Comment>> GetUnreadedCommentsAsync()
+        {
+            return await _commentsRepository.GetAllUnreadedAsync();
+        }
+
+        public async Task CreateCommentAsync(Comment comment)
+        {
+            comment.Id = Guid.NewGuid();
+            comment.Created = DateTime.Now;
+            comment.Readed = false;
+            await _commentsRepository.CreateAsync(comment);
+            await _articleInfoRepository.IncrementCommensCounterAsync(comment.ArticleId);
+        }
+
+        private async Task DeleteCommentsAsync(string articleId)
+        {
+            await _commentsRepository.DeleteAllAsync(articleId);
+        }
+
+        public async Task DeleteCommentAsync(Guid id)
+        {
+            var articleId = (await _commentsRepository.GetAsync(id))?.ArticleId;
+            await _commentsRepository.DeleteAsync(id);
+            if (!string.IsNullOrEmpty(articleId))
+            {
+                await _articleInfoRepository.DecrementCommensCounterAsync(articleId);
+            }
+        }
+
+        public async Task MarkCommentAsReadAsync(Guid id)
+        {
+            await _commentsRepository.MarkAsReadedAsync(id);
+        }
     }
 }
